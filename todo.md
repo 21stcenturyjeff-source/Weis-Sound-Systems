@@ -23,6 +23,7 @@
 - [x] Add prominent "VIEW GALLERY" button to hero section
 - [x] Fix footer layout to show gallery link on mobile
 - [x] Test gallery button navigation
+- [x] Push changes to GitHub with correct author credentials
 
 ## Next Steps
 - [ ] Test gallery upload functionality with authentication
