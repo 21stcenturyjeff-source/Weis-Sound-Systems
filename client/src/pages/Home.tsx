@@ -37,7 +37,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section 
-        className="relative min-h-screen flex items-center overflow-hidden"
+        className="relative min-h-screen flex items-center overflow-visible pb-32"
       >
         {/* Background Gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#0a0a0a]" />
@@ -151,10 +151,12 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Transition Gradient */}
+      <div className="relative h-32 bg-gradient-to-b from-transparent to-[#0a0a0a] pointer-events-none" />
+
       {/* Services Section - Angled Layout */}
-      <section className="relative py-32 overflow-hidden -mt-32">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background to-[#1a1a2e]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/0 via-[#0a0a0a]/50 to-[#0a0a0a]" />
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-[#1a1a2e]" />
         
         <div className="container relative z-10">
           <div className="mb-20">
