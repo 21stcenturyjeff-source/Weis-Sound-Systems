@@ -11,8 +11,8 @@ export default function LegalPageHeader({ title, subtitle }: LegalPageHeaderProp
   const handleBackHome = () => {
     // Mark curtain as seen BEFORE navigating
     localStorage.setItem("weis-curtain-seen", "true");
-    // Then navigate
-    setLocation("/");
+    // Then navigate to /home
+    setLocation("/home");
   };
 
   return (
