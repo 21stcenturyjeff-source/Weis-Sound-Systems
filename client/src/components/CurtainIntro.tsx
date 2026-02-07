@@ -5,13 +5,14 @@
  * - Bold typography and raw energy
  * 
  * Timing Sequence:
- * 1. User clicks to start
- * 2. Curtain opens (2 seconds)
+ * 1. Page loads, curtain closed (2 seconds pause)
+ * 2. Curtain automatically opens (2 seconds)
  * 3. Logo stays on stage (5 seconds)
  * 4. Transition to main website
+ * Total: 9 seconds
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface CurtainIntroProps {
   onComplete: () => void;
@@ -20,24 +21,25 @@ interface CurtainIntroProps {
 export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
   const [isOpening, setIsOpening] = useState(false);
 
-  const handleClick = () => {
-    setIsOpening(true);
-    // Wait for curtain to open (2s) + hold logo on stage (5s) = 7s total
-    setTimeout(onComplete, 7000);
-  };
+  useEffect(() => {
+    // Wait 2 seconds, then start opening the curtain
+    const openTimer = setTimeout(() => {
+      setIsOpening(true);
+    }, 2000);
+
+    // After curtain opens (2s) + hold logo (5s) = 7s more, then complete
+    const completeTimer = setTimeout(() => {
+      onComplete();
+    }, 9000); // 2s pause + 2s open + 5s hold = 9s total
+
+    return () => {
+      clearTimeout(openTimer);
+      clearTimeout(completeTimer);
+    };
+  }, [onComplete]);
 
   return (
-    <div
-      onClick={handleClick}
-      className="fixed inset-0 z-50 cursor-pointer overflow-hidden"
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          handleClick();
-        }
-      }}
-    >
+    <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Stage Background - Visible behind curtains */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#1a1a2e] to-[#0a0a0a]">
         {/* Stage Lighting Effect */}
@@ -86,13 +88,6 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
               ))}
             </div>
           </div>
-        </div>
-        
-        {/* Click to Enter Prompt */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center">
-          <p className="text-xl font-medium tracking-widest animate-pulse text-white/80">
-            CLICK TO ENTER
-          </p>
         </div>
       </div>
 
