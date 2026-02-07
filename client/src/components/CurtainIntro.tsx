@@ -2,14 +2,14 @@
  * Design Philosophy: Brutalist Concert Poster Aesthetic
  * - Dramatic curtain opening animation with theatrical weight
  * - Professional concert stage with speakers, lighting, and equipment
- * - Logo appears as the main performer on pure black center stage
+ * - Logo with black background appears as the main performer
  * 
  * Timing Sequence:
- * 1. Page loads, curtain closed (2 seconds pause)
- * 2. Curtain automatically opens (2 seconds)
- * 3. Logo stays on stage (5 seconds)
+ * 1. Page loads, curtain closed (1 second pause)
+ * 2. Curtain automatically opens slower (3 seconds)
+ * 3. Logo stays on stage (6 seconds)
  * 4. Transition to main website
- * Total: 9 seconds
+ * Total: 10 seconds
  */
 
 import { useState, useEffect } from "react";
@@ -22,15 +22,15 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
   const [isOpening, setIsOpening] = useState(false);
 
   useEffect(() => {
-    // Wait 2 seconds, then start opening the curtain
+    // Wait 1 second, then start opening the curtain
     const openTimer = setTimeout(() => {
       setIsOpening(true);
-    }, 2000);
+    }, 1000);
 
-    // After curtain opens (2s) + hold logo (5s) = 7s more, then complete
+    // After curtain opens (3s) + hold logo (6s) = 9s more, then complete
     const completeTimer = setTimeout(() => {
       onComplete();
-    }, 9000); // 2s pause + 2s open + 5s hold = 9s total
+    }, 10000); // 1s pause + 3s open + 6s hold = 10s total
 
     return () => {
       clearTimeout(openTimer);
@@ -40,48 +40,53 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
-      {/* Professional Concert Stage Background */}
-      <div 
-        className="absolute inset-0 bg-black"
-        style={{
-          backgroundImage: 'url(https://private-us-east-1.manuscdn.com/sessionFile/9pL43gJi26t4rDUjb9jcAm/sandbox/z7UrqC9jCyq2QtEhIBZhDI-img-1_1770487021000_na1fn_Y29uY2VydC1zdGFnZS1iYWNrZ3JvdW5k.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvOXBMNDNnSmkyNnQ0ckRVamI5amNBbS9zYW5kYm94L3o3VXJxQzlqQ3lxMlF0RWhJQlpoREktaW1nLTFfMTc3MDQ4NzAyMTAwMF9uYTFmbl9ZMjl1WTJWeWRDMXpkR0ZuWlMxaVlXTnJaM0p2ZFc1ay5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=h8R1HCna5bxDhXN3Nhezc~~rgepdR5LHw35yVtrVtfV~5ZXhbB4ujEKfknl4eO38U97WhGefNtxuwUeqP8Zibm0ubMMSeftgoSpEywj4Tdiz05jikjBxCO~-ZFfFkFpsOrjeHuha7kfskEKKMURIiiJWWIWNLh8JjbSoSe2h~cn18NhUMFNPNZhuqHtWNRwwxNhuM6i86VgmdZAEGnssvoWlGRAiRBQ3lYo32RFVjCohWqlaSiXXiMW2eNbC4lUFNwoQwiVuv5YgcXiEJvwbtRMKtNqyJqMUdnVsKc9YMzRJ80cOTw29wQImwljUJKKcxhHFOS5ZsF59UVk76aj4-A__)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        {/* Logo Container - Center Stage (Pure Black Background) */}
+      {/* Professional Concert Stage Background - Responsive */}
+      <div className="absolute inset-0 bg-black">
+        {/* Desktop/Landscape Background */}
+        <div 
+          className="hidden md:block absolute inset-0"
+          style={{
+            backgroundImage: 'url(https://private-us-east-1.manuscdn.com/sessionFile/9pL43gJi26t4rDUjb9jcAm/sandbox/QT3mVU0o6tTzuQvM7JE7iP-img-1_1770488557000_na1fn_c3RhZ2UtbGFuZHNjYXBl.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvOXBMNDNnSmkyNnQ0ckRVamI5amNBbS9zYW5kYm94L1FUM21WVTBvNnRUenVRdk03SkU3aVAtaW1nLTFfMTc3MDQ4ODU1NzAwMF9uYTFmbl9jM1JoWjJVdGJHRnVaSE5qWVhCbC5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=sHx0~eFfadoTskjTY7xMGm0u2AWQGMwIbrbUTvCYcbUlBf~ocWGG5QxuHZAjNAVh7ci-Z0nAXt6QZFCMzHksECpRqLZCqGE1zbPs3SpJZmtJMPj67kKV9M40bAPokZHcaer-Pl0vjNtcFmyACGSC0A7lObxtUu0-T5KASEB0b2Xzf-qTt0OkQxKndpwHrNM9viuMuCyVnwnwdzQE8mWpSl9DJA-z6v8uQLpbc9qCKGO3gbsndOpA-BE5P5cnz3Juf767bI-~PByMc9PTJ9m1AsDX6SIeqL4Qvwl27TUnBsO0469o1m2o4Ah66w4KK7tEfTn5SKmbEp2bJlPWvHpCRw__)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        
+        {/* Mobile/Portrait Background */}
+        <div 
+          className="md:hidden absolute inset-0"
+          style={{
+            backgroundImage: 'url(https://private-us-east-1.manuscdn.com/sessionFile/9pL43gJi26t4rDUjb9jcAm/sandbox/QT3mVU0o6tTzuQvM7JE7iP-img-2_1770488557000_na1fn_c3RhZ2UtcG9ydHJhaXQ.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvOXBMNDNnSmkyNnQ0ckRVamI5amNBbS9zYW5kYm94L1FUM21WVTBvNnRUenVRdk03SkU3aVAtaW1nLTJfMTc3MDQ4ODU1NzAwMF9uYTFmbl9jM1JoWjJVdGNHOXlkSEpoYVhRLnBuZz94LW9zcy1wcm9jZXNzPWltYWdlL3Jlc2l6ZSx3XzE5MjAsaF8xOTIwL2Zvcm1hdCx3ZWJwL3F1YWxpdHkscV84MCIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=VVJQZ3LZM~rsUuFeceko-P8iH0VowNANQ2umMiCmU-eTmvPGzb0I6ovV2rY4ajdtSe~tDQkRlSumEPb4huaF59zUYaEItZS3L4tGf0p0lhitsO9eq5t4DmOZ3UHl21UlTIh2eGHPfVXZd2x65jL1ASKizOqYTee5MQL3pCLLMaCYR76glTtr7JIJ1aSdj~8GwzuenUiF2~RgXYypovhc4vjjCJYq3cC9BpEOENAVSHMGiN24ZgElvP-ZMWOSLTOnomMR3OoPYI-OQ-qlONzCVFmBW6vjPcXpvspa-Enr9Jfzz9OZwkoGN21ZxeX9Nd2dVMWghCZqyg-zaJky-mkbrw__)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        
+        {/* Logo Container - Center Stage */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center space-y-6 px-4">
-            {/* Responsive Logo - Horizontal for desktop, Vertical for mobile */}
-            <div className="relative">
-              {/* Desktop Logo (Horizontal) */}
-              <img 
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/aYzqzbNGAQIVzewB.png"
-                alt="Weis Audio Systems"
-                className="hidden md:block w-full max-w-[800px] mx-auto"
-                style={{
-                  filter: 'drop-shadow(0 0 40px rgba(0, 255, 255, 0.5)) drop-shadow(0 0 80px rgba(255, 0, 255, 0.4))'
-                }}
-              />
-              
-              {/* Mobile Logo (Vertical) */}
-              <img 
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/ZeGIWRMrJmYslPHT.png"
-                alt="Weis Audio Systems"
-                className="md:hidden w-full max-w-[400px] mx-auto"
-                style={{
-                  filter: 'drop-shadow(0 0 40px rgba(0, 255, 255, 0.5)) drop-shadow(0 0 80px rgba(255, 0, 255, 0.4))'
-                }}
-              />
-            </div>
+          <div className="text-center px-4">
+            {/* Desktop Logo (Horizontal with Black Background) */}
+            <img 
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/towgOLpNNVnYWvbc.png"
+              alt="Weis Audio Systems"
+              className="hidden md:block w-full max-w-[900px] mx-auto"
+            />
+            
+            {/* Mobile Logo (Vertical with Black Background) */}
+            <img 
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/RVOzRJdNTqbXMjri.png"
+              alt="Weis Audio Systems"
+              className="md:hidden w-full max-w-[500px] mx-auto"
+            />
           </div>
         </div>
       </div>
 
       {/* Left Curtain */}
       <div
-        className={`absolute top-0 left-0 h-full w-1/2 transition-transform duration-[2000ms] ${
+        className={`absolute top-0 left-0 h-full w-1/2 transition-transform duration-[3000ms] ${
           isOpening ? "-translate-x-full" : "translate-x-0"
         }`}
         style={{
@@ -111,7 +116,7 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
 
       {/* Right Curtain */}
       <div
-        className={`absolute top-0 right-0 h-full w-1/2 transition-transform duration-[2000ms] ${
+        className={`absolute top-0 right-0 h-full w-1/2 transition-transform duration-[3000ms] ${
           isOpening ? "translate-x-full" : "translate-x-0"
         }`}
         style={{
