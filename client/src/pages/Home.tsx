@@ -157,10 +157,10 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-[#1a1a2e]" />
           {/* Cyan neon stripe with fade on top and bottom */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#00ffff]/0 via-[#00ffff] to-[#00ffff]/0 shadow-[0_0_20px_#00ffff] pointer-events-none" />
-        <div className="absolute -top-4 left-0 right-0 h-4 bg-gradient-to-b from-[#1a1a2e]/0 to-[#00ffff]/0 pointer-events-none" />
-        <div className="absolute top-1 left-0 right-0 h-4 bg-gradient-to-t from-[#0a0a0a]/0 to-[#00ffff]/0 pointer-events-none" />
+        <div className="absolute -top-6 left-0 right-0 h-6 bg-gradient-to-b from-transparent via-[#00ffff]/20 to-transparent pointer-events-none" />
+        <div className="absolute top-1 left-0 right-0 h-6 bg-gradient-to-t from-transparent via-[#00ffff]/20 to-transparent pointer-events-none" />
         
-        <div className="container relative z-10 pt-4">
+        <div className="container relative z-10 pt-2">
           <div className="mb-5">
             <h2 className="text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] mb-6">
               OUR
