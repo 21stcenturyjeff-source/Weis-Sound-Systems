@@ -1,0 +1,55 @@
+import { COOKIE_NAME } from "@shared/const";
+import { getSessionCookieOptions } from "./_core/cookies";
+import { systemRouter } from "./_core/systemRouter";
+import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { z } from "zod";
+import { getGalleryPhotos, addGalleryPhoto, deleteGalleryPhoto } from "./db";
+import { storagePut } from "./storage";
+
+export const appRouter = router({
+  system: systemRouter,
+  auth: router({
+    me: publicProcedure.query(opts => opts.ctx.user),
+    logout: publicProcedure.mutation(({ ctx }) => {
+      const cookieOptions = getSessionCookieOptions(ctx.req);
+      ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
+      return {
+        success: true,
+      } as const;
+    }),
+  }),
+
+  gallery: router({
+    list: publicProcedure.query(() => getGalleryPhotos()),
+    upload: protectedProcedure
+      .input(z.object({
+        title: z.string().min(1),
+        description: z.string().optional(),
+        imageBase64: z.string(),
+        filename: z.string(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const buffer = Buffer.from(input.imageBase64, 'base64');
+        const fileKey = `gallery/${Date.now()}-${Math.random().toString(36).substring(7)}-${input.filename}`;
+        const { url } = await storagePut(fileKey, buffer, 'image/jpeg');
+        
+        await addGalleryPhoto({
+          title: input.title,
+          description: input.description,
+          imageUrl: url,
+          imageKey: fileKey,
+          uploadedBy: ctx.user.id,
+        });
+        
+        return { success: true, url };
+      }),
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        await deleteGalleryPhoto(input.id);
+        return { success: true };
+      }),
+  }),
+});
+
+export type AppRouter = typeof appRouter;

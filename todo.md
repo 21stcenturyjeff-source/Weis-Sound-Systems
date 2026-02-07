@@ -1,0 +1,27 @@
+# Weis Audio Systems - Project TODO
+
+## Gallery Feature Implementation
+- [x] Create Gallery page component with image upload functionality
+- [x] Add gallery database schema (gallery_photos table)
+- [x] Create gallery database helper functions (getGalleryPhotos, addGalleryPhoto, deleteGalleryPhoto)
+- [x] Create gallery tRPC router with list, upload, and delete procedures
+- [x] Add Gallery route to App.tsx
+- [x] Add Gallery link to footer navigation
+- [x] Create gallery tests with vitest
+- [x] Push database schema changes with pnpm db:push
+
+## Existing Features
+- [x] Responsive design with equipment cards
+- [x] Curtain animation on first load (7 seconds total)
+- [x] Legal pages (Privacy Policy, Terms of Service, Disclaimer)
+- [x] Local SEO optimization for Pittsburgh PA
+- [x] Structured data and sitemap.xml
+- [x] Backend and database capabilities
+- [x] User authentication with Manus OAuth
+
+## Next Steps
+- [ ] Test gallery upload functionality in browser
+- [ ] Verify image storage to S3
+- [ ] Test gallery display with multiple photos
+- [ ] Push all changes to GitHub
+- [ ] Deploy to Vercel

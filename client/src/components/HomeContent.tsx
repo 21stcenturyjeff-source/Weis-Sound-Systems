@@ -267,6 +267,12 @@ export default function HomeContent() {
             </div>
             <div className="flex flex-col gap-4">
               <div>
+                <p className="text-sm font-bold text-white/80 mb-2">GALLERY</p>
+                <nav className="flex flex-col gap-1">
+                  <a href="/gallery" className="text-sm text-white/60 hover:text-[#00ffff] transition-colors">Stage Photos</a>
+                </nav>
+              </div>
+              <div>
                 <p className="text-sm font-bold text-white/80 mb-2">LEGAL</p>
                 <nav className="flex flex-col gap-1">
                   <a href="/privacy-policy" className="text-sm text-white/60 hover:text-[#00ffff] transition-colors">Privacy Policy</a>
