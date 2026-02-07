@@ -71,14 +71,14 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
             <img 
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/towgOLpNNVnYWvbc.png"
               alt="Weis Audio Systems"
-              className="hidden md:block w-full max-w-[1688px] mx-auto"
+              className="hidden md:block w-full max-w-[2110px] mx-auto"
             />
             
-            {/* Mobile Logo (Vertical with Black Background) - 50% larger */}
+            {/* Mobile Logo (Vertical with Black Background) - 75% larger */}
             <img 
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/RVOzRJdNTqbXMjri.png"
               alt="Weis Audio Systems"
-              className="md:hidden w-full max-w-[845px] mx-auto"
+              className="md:hidden w-full max-w-[1056px] mx-auto"
             />
           </div>
         </div>
