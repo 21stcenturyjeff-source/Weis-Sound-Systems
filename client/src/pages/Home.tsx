@@ -15,14 +15,13 @@ export default function Home() {
   const [showCurtain, setShowCurtain] = useState(true);
   const [hasSeenCurtain, setHasSeenCurtain] = useState(false);
 
-  // Commented out for testing - show curtain on every refresh
-  // useEffect(() => {
-  //   const seen = localStorage.getItem("weis-curtain-seen");
-  //   if (seen) {
-  //     setShowCurtain(false);
-  //     setHasSeenCurtain(true);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const seen = localStorage.getItem("weis-curtain-seen");
+    if (seen) {
+      setShowCurtain(false);
+      setHasSeenCurtain(true);
+    }
+  }, []);
 
   const handleCurtainComplete = () => {
     localStorage.setItem("weis-curtain-seen", "true");
