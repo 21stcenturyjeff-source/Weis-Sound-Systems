@@ -200,3 +200,41 @@
     }
   }
 }
+
+
+/* Responsive card rotations */
+@media (max-width: 767px) {
+  .card-rotate-sound-systems {
+    transform: rotate(-2deg) !important;
+  }
+  
+  .card-rotate-mixers {
+    transform: rotate(2deg) !important;
+  }
+  
+  .card-rotate-microphones {
+    transform: rotate(-2deg) !important;
+  }
+  
+  .card-rotate-power {
+    transform: rotate(2deg) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .card-rotate-sound-systems {
+    transform: rotate(-1deg) !important;
+  }
+  
+  .card-rotate-mixers {
+    transform: rotate(1deg) !important;
+  }
+  
+  .card-rotate-microphones {
+    transform: rotate(2deg) !important;
+  }
+  
+  .card-rotate-power {
+    transform: rotate(-2deg) !important;
+  }
+}

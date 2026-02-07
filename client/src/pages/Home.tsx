@@ -170,9 +170,8 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Sound Systems */}
             <div 
-              className="group relative bg-card p-8 border-2 border-border hover:border-[#00ffff] transition-all duration-300"
+              className="group relative bg-card p-8 border-2 border-border hover:border-[#00ffff] transition-all duration-300 card-rotate-sound-systems"
               style={{
-                transform: "rotate(-2deg)",
                 boxShadow: "8px 8px 0 rgba(0, 0, 0, 0.5)"
               }}
             >
@@ -189,9 +188,8 @@ export default function Home() {
 
             {/* Mixers */}
             <div 
-              className="group relative bg-card p-8 border-2 border-border hover:border-[#ff00ff] transition-all duration-300 md:mt-12"
+              className="group relative bg-card p-8 border-2 border-border hover:border-[#ff00ff] transition-all duration-300 md:mt-12 card-rotate-mixers"
               style={{
-                transform: "rotate(2deg)",
                 boxShadow: "8px 8px 0 rgba(0, 0, 0, 0.5)"
               }}
             >
@@ -208,9 +206,8 @@ export default function Home() {
 
             {/* Microphones */}
             <div 
-              className="group relative bg-card p-8 border-2 border-border hover:border-[#ffff00] transition-all duration-300"
+              className="group relative bg-card p-8 border-2 border-border hover:border-[#ffff00] transition-all duration-300 card-rotate-microphones"
               style={{
-                transform: "rotate(-2deg)",
                 boxShadow: "8px 8px 0 rgba(0, 0, 0, 0.5)"
               }}
             >
@@ -227,9 +224,8 @@ export default function Home() {
 
             {/* Power & Processing */}
             <div 
-              className="group relative bg-card p-8 border-2 border-border hover:border-[#00ffff] transition-all duration-300 md:mt-12"
+              className="group relative bg-card p-8 border-2 border-border hover:border-[#00ffff] transition-all duration-300 md:mt-12 card-rotate-power"
               style={{
-                transform: "rotate(-2deg)",
                 boxShadow: "8px 8px 0 rgba(0, 0, 0, 0.5)"
               }}
             >
