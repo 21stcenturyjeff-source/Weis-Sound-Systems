@@ -152,8 +152,9 @@ export default function Home() {
       </section>
 
       {/* Services Section - Angled Layout */}
-      <section className="relative py-32 overflow-hidden mt-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-background to-[#1a1a2e]" />
+      <section className="relative py-32 overflow-hidden -mt-32">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background to-[#1a1a2e]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/0 via-[#0a0a0a]/50 to-[#0a0a0a]" />
         
         <div className="container relative z-10">
           <div className="mb-20">
