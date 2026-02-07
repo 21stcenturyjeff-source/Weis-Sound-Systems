@@ -1,18 +1,9 @@
+import LegalPageHeader from "@/components/LegalPageHeader";
+
 export default function TermsOfService() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#0a0a0a]" />
-        <div className="container relative z-10">
-          <h1 className="text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] font-bold tracking-wider mb-4">
-            TERMS OF
-            <br />
-            <span className="text-[#ff00ff]">SERVICE</span>
-          </h1>
-          <p className="text-xl text-white/60">Last Updated: February 2026</p>
-        </div>
-      </section>
+      <LegalPageHeader title="TERMS OF SERVICE" subtitle="Last Updated: February 2026" />
 
       {/* Content */}
       <section className="relative py-16 overflow-hidden">
