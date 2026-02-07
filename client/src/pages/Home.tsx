@@ -274,12 +274,12 @@ export default function Home() {
         <div className="container">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
-              <p className="text-3xl font-bold tracking-wider">WEIS SOUND SYSTEMS</p>
+              <p className="text-3xl font-bold tracking-wider">WEIS AUDIO SYSTEMS</p>
               <p className="text-2xl font-bold text-[#00ffff] mt-2">724-448-6944</p>
               <p className="text-sm text-white/60 mt-2">Professional Stage Audio Solutions</p>
             </div>
             <div className="text-center md:text-right">
-              <p className="text-white/60">© 2026 Weis Sound Systems. All rights reserved.</p>
+              <p className="text-white/60">© 2026 Weis Audio Systems. All rights reserved.</p>
             </div>
           </div>
         </div>
