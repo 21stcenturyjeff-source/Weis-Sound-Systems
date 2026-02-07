@@ -63,7 +63,7 @@ export default function Home() {
             {/* Logo */}
             <div className="mb-12 md:mb-18">
               <img 
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/rAJyreUhHnvAnenV.png"
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/WvliBgwpAaGnYxTN.png"
                 alt="Weis Audio Systems"
                 className="w-full md:max-w-[780px]"
               />
@@ -135,7 +135,20 @@ export default function Home() {
           </div>
         </div>
         
-
+        {/* Waveform Decoration - Bottom */}
+        <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-1 pb-8 opacity-30">
+          {[...Array(60)].map((_, i) => (
+            <div
+              key={i}
+              className="w-1 bg-gradient-to-t from-[#00ffff] to-[#ff00ff]"
+              style={{
+                height: `${Math.random() * 100 + 20}px`,
+                animation: `pulse ${Math.random() * 3 + 1}s ease-in-out infinite`,
+                animationDelay: `${i * 0.05}s`
+              }}
+            />
+          ))}
+        </div>
       </section>
 
       {/* Services Section - Angled Layout */}
