@@ -65,7 +65,7 @@ export default function Home() {
               <img 
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/WvliBgwpAaGnYxTN.png"
                 alt="Weis Audio Systems"
-                className="w-full md:max-w-[780px]"
+                className="w-full md:max-w-[1170px] max-w-[675px]"
               />
             </div>
             
@@ -152,9 +152,12 @@ export default function Home() {
       </section>
 
       {/* Services Section - Angled Layout */}
-      <section className="relative py-32 overflow-hidden -mt-16">
+      <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-[#1a1a2e]" />
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#1a1a2e] via-[#0f0f1a] to-[#0a0a0a] pointer-events-none" />
+        {/* Cyan neon stripe with fade edges */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#00ffff]/0 via-[#00ffff] to-[#00ffff]/0 shadow-[0_0_20px_#00ffff] pointer-events-none" />
+        <div className="absolute -top-8 left-0 right-0 h-16 bg-gradient-to-b from-[#1a1a2e]/0 to-[#0a0a0a] pointer-events-none" />
+        <div className="absolute top-1 left-0 right-0 h-16 bg-gradient-to-t from-[#0a0a0a]/0 to-[#0a0a0a] pointer-events-none" />
         
         <div className="container relative z-10">
           <div className="mb-20">
