@@ -7,9 +7,9 @@
  * Timing Sequence:
  * 1. Page loads, curtain closed (1 second pause)
  * 2. Curtain automatically opens slower (3 seconds)
- * 3. Logo stays on stage (6 seconds)
+ * 3. Logo stays on stage (4.5 seconds)
  * 4. Transition to main website
- * Total: 10 seconds
+ * Total: 8.5 seconds
  */
 
 import { useState, useEffect } from "react";
@@ -27,10 +27,10 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
       setIsOpening(true);
     }, 1000);
 
-    // After curtain opens (3s) + hold logo (6s) = 9s more, then complete
+    // After curtain opens (3s) + hold logo (4.5s) = 7.5s more, then complete
     const completeTimer = setTimeout(() => {
       onComplete();
-    }, 10000); // 1s pause + 3s open + 6s hold = 10s total
+    }, 8500); // 1s pause + 3s open + 4.5s hold = 8.5s total
 
     return () => {
       clearTimeout(openTimer);
@@ -74,11 +74,11 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
               className="hidden md:block w-full max-w-[1688px] mx-auto"
             />
             
-            {/* Mobile Logo (Vertical with Black Background) - 25% larger */}
+            {/* Mobile Logo (Vertical with Black Background) - 50% larger */}
             <img 
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/RVOzRJdNTqbXMjri.png"
               alt="Weis Audio Systems"
-              className="md:hidden w-full max-w-[563px] mx-auto"
+              className="md:hidden w-full max-w-[845px] mx-auto"
             />
           </div>
         </div>

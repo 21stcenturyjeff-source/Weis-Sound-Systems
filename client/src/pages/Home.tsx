@@ -67,7 +67,7 @@ export default function Home() {
             {/* Logo */}
             <div className="mb-12">
               <img 
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/towgOLpNNVnYWvbc.png"
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/ZXDohmuuErLwmLnf.png"
                 alt="Weis Audio Systems"
                 className="w-full max-w-[600px]"
               />
@@ -291,12 +291,8 @@ export default function Home() {
         <div className="container">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
-              <img 
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/towgOLpNNVnYWvbc.png"
-                alt="Weis Audio Systems"
-                className="w-full max-w-[400px]"
-              />
-              <p className="text-sm text-white/60 mt-4">Professional Stage Audio Solutions</p>
+              <p className="text-3xl font-bold tracking-wider">WEIS SOUND SYSTEMS</p>
+              <p className="text-sm text-white/60 mt-2">Professional Stage Audio Solutions</p>
             </div>
             <div className="text-center md:text-right">
               <p className="text-white/60">© 2026 Weis Sound Systems. All rights reserved.</p>
