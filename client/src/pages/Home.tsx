@@ -151,12 +151,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Transition Gradient */}
-      <div className="relative h-16 bg-gradient-to-t from-[#000000] via-[#0f0f1a] to-[#1a1a2e] pointer-events-none" />
-
       {/* Services Section - Angled Layout */}
-      <section className="relative py-32 overflow-hidden">
+      <section className="relative py-32 overflow-hidden -mt-16">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-[#1a1a2e]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0a0a]/50 to-[#0a0a0a] pointer-events-none" />
         
         <div className="container relative z-10">
           <div className="mb-20">
