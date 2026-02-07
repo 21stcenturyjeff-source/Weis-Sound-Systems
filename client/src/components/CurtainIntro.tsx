@@ -3,6 +3,12 @@
  * - Dramatic curtain opening animation with theatrical weight
  * - Deep black backgrounds with electric accents
  * - Bold typography and raw energy
+ * 
+ * Timing Sequence:
+ * 1. User clicks to start
+ * 2. Curtain opens (2 seconds)
+ * 3. Logo stays on stage (5 seconds)
+ * 4. Transition to main website
  */
 
 import { useState } from "react";
@@ -16,8 +22,8 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
 
   const handleClick = () => {
     setIsOpening(true);
-    // Wait for animation to complete before calling onComplete
-    setTimeout(onComplete, 2000);
+    // Wait for curtain to open (2s) + hold logo on stage (5s) = 7s total
+    setTimeout(onComplete, 7000);
   };
 
   return (
@@ -42,30 +48,31 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
         {/* Logo Container - Center Stage */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center space-y-6 px-4">
-            {/* Main Logo Text */}
-            <h1 
-              className="text-[clamp(3rem,10vw,10rem)] leading-[0.9] tracking-tight"
-              style={{
-                textShadow: `
-                  0 0 20px rgba(0, 255, 255, 0.5),
-                  0 0 40px rgba(0, 255, 255, 0.3),
-                  0 0 60px rgba(0, 255, 255, 0.2),
-                  4px 4px 0 rgba(255, 0, 255, 0.3)
-                `
-              }}
-            >
-              WEIS<br />
-              SOUND<br />
-              SYSTEMS
-            </h1>
-            
-            {/* Tagline */}
-            <p className="text-[clamp(1rem,2vw,1.5rem)] font-medium tracking-widest text-[#00ffff] opacity-80">
-              PROFESSIONAL STAGE AUDIO
-            </p>
+            {/* Responsive Logo - Horizontal for desktop, Vertical for mobile */}
+            <div className="relative">
+              {/* Desktop Logo (Horizontal) */}
+              <img 
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/aYzqzbNGAQIVzewB.png"
+                alt="Weis Audio Systems"
+                className="hidden md:block w-full max-w-[800px] mx-auto"
+                style={{
+                  filter: 'drop-shadow(0 0 30px rgba(0, 255, 255, 0.4)) drop-shadow(0 0 60px rgba(255, 0, 255, 0.3))'
+                }}
+              />
+              
+              {/* Mobile Logo (Vertical) */}
+              <img 
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/ZeGIWRMrJmYslPHT.png"
+                alt="Weis Audio Systems"
+                className="md:hidden w-full max-w-[400px] mx-auto"
+                style={{
+                  filter: 'drop-shadow(0 0 30px rgba(0, 255, 255, 0.4)) drop-shadow(0 0 60px rgba(255, 0, 255, 0.3))'
+                }}
+              />
+            </div>
             
             {/* Waveform Decoration */}
-            <div className="flex justify-center gap-1 mt-8">
+            <div className="flex justify-center gap-1 mt-12">
               {[...Array(20)].map((_, i) => (
                 <div
                   key={i}
