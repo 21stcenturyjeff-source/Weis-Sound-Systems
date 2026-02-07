@@ -173,7 +173,7 @@ export default function HomeContent() {
                 <Radio size={80} strokeWidth={1} />
               </div>
               <div className="relative">
-                <h3 className="text-4xl mb-4 text-[#ff00ff]">PROFESSIONAL MIXERS</h3>
+                <h3 className="text-4xl mb-4 text-[#ff00ff]">YAMAHA MIXERS</h3>
                 <p className="text-lg text-white/70 leading-relaxed">
                   Digital and analog mixing consoles with advanced routing, effects processing, and multi-channel capabilities. Professional audio mixing equipment for Pittsburgh PA concerts and live events. Complete control over every aspect of your sound.
                 </p>
@@ -191,7 +191,7 @@ export default function HomeContent() {
                 <Mic size={80} strokeWidth={1} />
               </div>
               <div className="relative">
-                <h3 className="text-4xl mb-4 text-[#ffff00]">PROFESSIONAL MICROPHONES</h3>
+                <h3 className="text-4xl mb-4 text-[#ffff00]">SHURE MICROPHONES</h3>
                 <p className="text-lg text-white/70 leading-relaxed">
                   Premium vocal and instrument microphones, wireless systems, and monitoring solutions for Pittsburgh PA events. Capture every nuance with professional-grade clarity and reliability.
                 </p>
