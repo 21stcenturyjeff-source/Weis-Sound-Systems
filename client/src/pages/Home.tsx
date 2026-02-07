@@ -172,7 +172,7 @@ export default function Home() {
             <div 
               className="group relative bg-card p-8 border-2 border-border hover:border-[#00ffff] transition-all duration-300"
               style={{
-                transform: "rotate(-1deg)",
+                transform: "rotate(-2deg)",
                 boxShadow: "8px 8px 0 rgba(0, 0, 0, 0.5)"
               }}
             >
@@ -191,7 +191,7 @@ export default function Home() {
             <div 
               className="group relative bg-card p-8 border-2 border-border hover:border-[#ff00ff] transition-all duration-300 md:mt-12"
               style={{
-                transform: "rotate(1deg)",
+                transform: "rotate(2deg)",
                 boxShadow: "8px 8px 0 rgba(0, 0, 0, 0.5)"
               }}
             >
@@ -229,7 +229,7 @@ export default function Home() {
             <div 
               className="group relative bg-card p-8 border-2 border-border hover:border-[#00ffff] transition-all duration-300 md:mt-12"
               style={{
-                transform: "rotate(2deg)",
+                transform: "rotate(-2deg)",
                 boxShadow: "8px 8px 0 rgba(0, 0, 0, 0.5)"
               }}
             >
