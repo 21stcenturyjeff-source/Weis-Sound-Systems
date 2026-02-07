@@ -6,11 +6,16 @@ interface LegalPageHeaderProps {
 }
 
 export default function LegalPageHeader({ title, subtitle }: LegalPageHeaderProps) {
+  const handleBackHome = () => {
+    // Mark curtain as seen so it doesn't show again when returning home
+    localStorage.setItem("weis-curtain-seen", "true");
+  };
+
   return (
     <section className="relative py-20 overflow-hidden border-b border-white/10">
       <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#0a0a0a]" />
       <div className="container relative z-10">
-        <Link href="/" className="inline-flex items-center gap-2 text-[#00ffff] hover:text-white transition-colors mb-6">
+        <Link href="/" onClick={handleBackHome} className="inline-flex items-center gap-2 text-[#00ffff] hover:text-white transition-colors mb-6">
           <span>←</span>
           <span>Back to Home</span>
         </Link>
