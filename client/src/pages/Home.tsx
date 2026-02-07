@@ -117,7 +117,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-4">
               <Button 
                 size="lg"
-                className="h-14 px-8 text-lg font-bold tracking-wider bg-[#00ffff] text-black hover:bg-[#00ffff]/90 hover:scale-105 transition-all duration-200"
+                className="h-14 px-8 text-lg font-bold tracking-wider bg-[#00ffff] text-black hover:bg-[#00ffff]/90 hover:scale-105 transition-all duration-200 w-48"
                 style={{
                   boxShadow: "0 0 20px rgba(0, 255, 255, 0.5), 4px 4px 0 rgba(255, 0, 255, 0.4)"
                 }}
@@ -127,7 +127,7 @@ export default function Home() {
               <Button 
                 size="lg"
                 variant="outline"
-                className="h-14 px-8 text-lg font-bold tracking-wider border-2 border-white text-white hover:bg-white hover:text-black transition-all duration-200"
+                className="h-14 px-8 text-lg font-bold tracking-wider border-2 border-white text-white hover:bg-white hover:text-black transition-all duration-200 w-48"
               >
                 VIEW EQUIPMENT
               </Button>
@@ -290,7 +290,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
               <p className="text-3xl font-bold tracking-wider">WEIS AUDIO SYSTEMS</p>
-              <p className="text-2xl font-bold text-[#00ffff] mt-2">724-448-6944</p>
+              <p className="text-[3.6rem] font-bold text-[#00ffff] mt-2">724-448-6944</p>
               <p className="text-sm text-white/60 mt-2">Professional Stage Audio Solutions</p>
             </div>
             <div className="text-center md:text-right">
