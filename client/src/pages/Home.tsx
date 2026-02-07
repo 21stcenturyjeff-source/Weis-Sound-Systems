@@ -65,11 +65,11 @@ export default function Home() {
         <div className="container relative z-10 py-20">
           <div className="max-w-5xl">
             {/* Logo */}
-            <div className="mb-12">
+            <div className="mb-6 md:mb-12">
               <img 
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/ZXDohmuuErLwmLnf.png"
                 alt="Weis Audio Systems"
-                className="w-full max-w-[600px]"
+                className="w-full md:max-w-[780px]"
               />
             </div>
             
