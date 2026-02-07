@@ -160,7 +160,7 @@ export default function Home() {
         <div className="absolute top-1 left-0 right-0 h-16 bg-gradient-to-t from-[#0a0a0a]/0 to-[#0a0a0a] pointer-events-none" />
         
         <div className="container relative z-10">
-          <div className="mb-20">
+          <div className="mb-10">
             <h2 className="text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] mb-6">
               OUR
               <br />
