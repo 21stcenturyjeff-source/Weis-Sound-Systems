@@ -152,6 +152,7 @@ export default function Home() {
       </section>
 
       {/* Services Section - Angled Layout */}
+      {/* Force rebuild */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-[#1a1a2e]" />
           {/* Cyan neon stripe with fade on top and bottom */}
