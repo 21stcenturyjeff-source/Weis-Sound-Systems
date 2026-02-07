@@ -19,8 +19,13 @@
 - [x] Backend and database capabilities
 - [x] User authentication with Manus OAuth
 
+## Navigation Improvements
+- [x] Add prominent "VIEW GALLERY" button to hero section
+- [x] Fix footer layout to show gallery link on mobile
+- [x] Test gallery button navigation
+
 ## Next Steps
-- [ ] Test gallery upload functionality in browser
+- [ ] Test gallery upload functionality with authentication
 - [ ] Verify image storage to S3
 - [ ] Test gallery display with multiple photos
 - [ ] Push all changes to GitHub

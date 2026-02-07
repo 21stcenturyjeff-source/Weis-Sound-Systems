@@ -107,6 +107,17 @@ export default function HomeContent() {
               >
                 VIEW EQUIPMENT
               </Button>
+              <a href="/gallery" className="inline-block">
+                <Button 
+                  size="lg"
+                  className="h-14 px-8 text-lg font-bold tracking-wider bg-[#ff00ff] text-white hover:bg-[#ff00ff]/90 hover:scale-105 transition-all duration-200 w-48"
+                  style={{
+                    boxShadow: "0 0 20px rgba(255, 0, 255, 0.5), 4px 4px 0 rgba(0, 255, 255, 0.4)"
+                  }}
+                >
+                  VIEW GALLERY
+                </Button>
+              </a>
             </div>
           </div>
         </div>
@@ -265,7 +276,7 @@ export default function HomeContent() {
               <p className="text-[3.6rem] font-bold text-[#00ffff] mt-2">724-448-6944</p>
               <p className="text-sm text-white/60 mt-2">Professional Stage Audio Solutions</p>
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col md:flex-row gap-8">
               <div>
                 <p className="text-sm font-bold text-white/80 mb-2">GALLERY</p>
                 <nav className="flex flex-col gap-1">
