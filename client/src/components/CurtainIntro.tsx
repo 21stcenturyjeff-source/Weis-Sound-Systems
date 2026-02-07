@@ -1,8 +1,8 @@
 /**
  * Design Philosophy: Brutalist Concert Poster Aesthetic
  * - Dramatic curtain opening animation with theatrical weight
- * - Deep black backgrounds with electric accents
- * - Bold typography and raw energy
+ * - Professional concert stage with speakers, lighting, and equipment
+ * - Logo appears as the main performer on pure black center stage
  * 
  * Timing Sequence:
  * 1. Page loads, curtain closed (2 seconds pause)
@@ -40,14 +40,17 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
-      {/* Stage Background - Visible behind curtains */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#1a1a2e] to-[#0a0a0a]">
-        {/* Stage Lighting Effect */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gradient-radial from-[#00ffff]/20 via-transparent to-transparent blur-3xl" />
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-gradient-radial from-[#ff00ff]/15 via-transparent to-transparent blur-3xl" />
-        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-gradient-radial from-[#ffff00]/10 via-transparent to-transparent blur-3xl" />
-        
-        {/* Logo Container - Center Stage */}
+      {/* Professional Concert Stage Background */}
+      <div 
+        className="absolute inset-0 bg-black"
+        style={{
+          backgroundImage: 'url(https://private-us-east-1.manuscdn.com/sessionFile/9pL43gJi26t4rDUjb9jcAm/sandbox/z7UrqC9jCyq2QtEhIBZhDI-img-1_1770487021000_na1fn_Y29uY2VydC1zdGFnZS1iYWNrZ3JvdW5k.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvOXBMNDNnSmkyNnQ0ckRVamI5amNBbS9zYW5kYm94L3o3VXJxQzlqQ3lxMlF0RWhJQlpoREktaW1nLTFfMTc3MDQ4NzAyMTAwMF9uYTFmbl9ZMjl1WTJWeWRDMXpkR0ZuWlMxaVlXTnJaM0p2ZFc1ay5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=h8R1HCna5bxDhXN3Nhezc~~rgepdR5LHw35yVtrVtfV~5ZXhbB4ujEKfknl4eO38U97WhGefNtxuwUeqP8Zibm0ubMMSeftgoSpEywj4Tdiz05jikjBxCO~-ZFfFkFpsOrjeHuha7kfskEKKMURIiiJWWIWNLh8JjbSoSe2h~cn18NhUMFNPNZhuqHtWNRwwxNhuM6i86VgmdZAEGnssvoWlGRAiRBQ3lYo32RFVjCohWqlaSiXXiMW2eNbC4lUFNwoQwiVuv5YgcXiEJvwbtRMKtNqyJqMUdnVsKc9YMzRJ80cOTw29wQImwljUJKKcxhHFOS5ZsF59UVk76aj4-A__)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Logo Container - Center Stage (Pure Black Background) */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center space-y-6 px-4">
             {/* Responsive Logo - Horizontal for desktop, Vertical for mobile */}
@@ -58,7 +61,7 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
                 alt="Weis Audio Systems"
                 className="hidden md:block w-full max-w-[800px] mx-auto"
                 style={{
-                  filter: 'drop-shadow(0 0 30px rgba(0, 255, 255, 0.4)) drop-shadow(0 0 60px rgba(255, 0, 255, 0.3))'
+                  filter: 'drop-shadow(0 0 40px rgba(0, 255, 255, 0.5)) drop-shadow(0 0 80px rgba(255, 0, 255, 0.4))'
                 }}
               />
               
@@ -68,24 +71,9 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
                 alt="Weis Audio Systems"
                 className="md:hidden w-full max-w-[400px] mx-auto"
                 style={{
-                  filter: 'drop-shadow(0 0 30px rgba(0, 255, 255, 0.4)) drop-shadow(0 0 60px rgba(255, 0, 255, 0.3))'
+                  filter: 'drop-shadow(0 0 40px rgba(0, 255, 255, 0.5)) drop-shadow(0 0 80px rgba(255, 0, 255, 0.4))'
                 }}
               />
-            </div>
-            
-            {/* Waveform Decoration */}
-            <div className="flex justify-center gap-1 mt-12">
-              {[...Array(20)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-1 bg-gradient-to-t from-[#00ffff] to-[#ff00ff]"
-                  style={{
-                    height: `${Math.random() * 60 + 20}px`,
-                    animation: `pulse ${Math.random() * 2 + 1}s ease-in-out infinite`,
-                    animationDelay: `${i * 0.1}s`
-                  }}
-                />
-              ))}
             </div>
           </div>
         </div>
