@@ -27,10 +27,10 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
       setIsOpening(true);
     }, 1000);
 
-    // After curtain opens (3s) + pause (3s) + hold logo (1.5s) = 7.5s more, then complete
+    // After curtain opens (3s) + pause (3s) = 6s more, then complete
     const completeTimer = setTimeout(() => {
       onComplete();
-    }, 8500); // 1s pause + 3s open + 3s pause + 1.5s hold = 8.5s total
+    }, 7000); // 1s pause + 3s open + 3s pause = 7s total
 
     return () => {
       clearTimeout(openTimer);
