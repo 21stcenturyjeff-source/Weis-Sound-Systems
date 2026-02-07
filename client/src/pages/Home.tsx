@@ -152,7 +152,7 @@ export default function Home() {
       </section>
 
       {/* Transition Gradient */}
-      <div className="relative h-16 bg-gradient-to-b from-[#1a1a2e] via-[#0f0f1a] to-[#000000] pointer-events-none" />
+      <div className="relative h-16 bg-gradient-to-t from-[#000000] via-[#0f0f1a] to-[#1a1a2e] pointer-events-none" />
 
       {/* Services Section - Angled Layout */}
       <section className="relative py-32 overflow-hidden">
