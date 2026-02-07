@@ -14,13 +14,8 @@ export default function Home() {
   const [showCurtain, setShowCurtain] = useState(true);
   const [, setLocation] = useLocation();
 
-  useEffect(() => {
-    // Only show curtain on the / route, not on /home
-    const seen = localStorage.getItem("weis-curtain-seen");
-    if (seen) {
-      setShowCurtain(false);
-    }
-  }, []);
+  // Always show curtain on / route - no localStorage check
+  // useEffect not needed since showCurtain starts as true
 
   const handleCurtainComplete = () => {
     localStorage.setItem("weis-curtain-seen", "true");
