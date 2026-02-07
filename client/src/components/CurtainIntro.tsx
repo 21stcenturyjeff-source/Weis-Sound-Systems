@@ -67,18 +67,18 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
         {/* Logo Container - Center Stage */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center px-4">
-            {/* Desktop Logo (Horizontal with Black Background) */}
+            {/* Desktop Logo (Horizontal with Black Background) - 50% larger */}
             <img 
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/towgOLpNNVnYWvbc.png"
               alt="Weis Audio Systems"
-              className="hidden md:block w-full max-w-[900px] mx-auto"
+              className="hidden md:block w-full max-w-[1350px] mx-auto"
             />
             
-            {/* Mobile Logo (Vertical with Black Background) */}
+            {/* Mobile Logo (Vertical with Black Background) - 10% smaller */}
             <img 
               src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/RVOzRJdNTqbXMjri.png"
               alt="Weis Audio Systems"
-              className="md:hidden w-full max-w-[500px] mx-auto"
+              className="md:hidden w-full max-w-[450px] mx-auto"
             />
           </div>
         </div>
