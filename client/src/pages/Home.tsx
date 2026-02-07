@@ -35,13 +35,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Hero Section - Diagonal Cut */}
+      {/* Hero Section */}
       <section 
         className="relative min-h-screen flex items-center overflow-hidden"
-        style={{
-          clipPath: "polygon(0 0, 100% 0, 100% 92%, 0 100%)",
-          marginBottom: "-8vh"
-        }}
       >
         {/* Background Gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#0a0a0a]" />
@@ -62,12 +58,12 @@ export default function Home() {
           }}
         />
         
-        <div className="container relative z-10 py-20">
+        <div className="container relative z-10 py-8 md:py-12">
           <div className="max-w-5xl">
             {/* Logo */}
-            <div className="mb-6 md:mb-12">
+            <div className="mb-12 md:mb-18">
               <img 
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/ZXDohmuuErLwmLnf.png"
+                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663047521100/rAJyreUhHnvAnenV.png"
                 alt="Weis Audio Systems"
                 className="w-full md:max-w-[780px]"
               />
@@ -139,24 +135,11 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Waveform Decoration - Bottom */}
-        <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-1 pb-8 opacity-30">
-          {[...Array(60)].map((_, i) => (
-            <div
-              key={i}
-              className="w-1 bg-gradient-to-t from-[#00ffff] to-[#ff00ff]"
-              style={{
-                height: `${Math.random() * 100 + 20}px`,
-                animation: `pulse ${Math.random() * 3 + 1}s ease-in-out infinite`,
-                animationDelay: `${i * 0.05}s`
-              }}
-            />
-          ))}
-        </div>
+
       </section>
 
       {/* Services Section - Angled Layout */}
-      <section className="relative py-32 overflow-hidden">
+      <section className="relative py-32 overflow-hidden mt-0">
         <div className="absolute inset-0 bg-gradient-to-b from-background to-[#1a1a2e]" />
         
         <div className="container relative z-10">
@@ -292,6 +275,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
               <p className="text-3xl font-bold tracking-wider">WEIS SOUND SYSTEMS</p>
+              <p className="text-2xl font-bold text-[#00ffff] mt-2">724-448-6944</p>
               <p className="text-sm text-white/60 mt-2">Professional Stage Audio Solutions</p>
             </div>
             <div className="text-center md:text-right">
