@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import CurtainIntro from "@/components/CurtainIntro";
 import { Button } from "@/components/ui/button";
 import { Volume2, Mic, Radio, Zap } from "lucide-react";
+import { SEOHead } from "@/components/SEOHead";
 
 export default function Home() {
   const [showCurtain, setShowCurtain] = useState(true);
@@ -34,8 +35,14 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Hero Section */}
+    <>
+      <SEOHead 
+        title="Professional Sound Systems Pittsburgh PA | Weis Sound Systems"
+        description="Premium sound systems, professional mixers, and crystal-clear microphones for bands, concerts, and live events in Pittsburgh PA and surrounding regions. Expert audio equipment rental and services."
+        path="/"
+      />
+      <div className="min-h-screen bg-background text-foreground">
+        {/* Hero Section */}
       <section 
         className="relative min-h-screen flex items-center overflow-visible pb-32"
       >
@@ -110,7 +117,7 @@ export default function Home() {
             
             {/* Description */}
             <p className="text-xl md:text-2xl font-medium leading-relaxed mb-12 max-w-2xl text-white/80">
-              Premium sound systems, professional mixers, and crystal-clear microphones for bands, concerts, and live events.
+              Professional sound systems, premium mixers, and crystal-clear microphones for bands, concerts, and live events in Pittsburgh PA and surrounding regions. Expert audio equipment rental and event services.
             </p>
             
             {/* CTA Buttons */}
@@ -179,9 +186,9 @@ export default function Home() {
                 <Volume2 size={80} strokeWidth={1} />
               </div>
               <div className="relative">
-                <h3 className="text-4xl mb-4 text-[#00ffff]">SOUND SYSTEMS</h3>
+                <h3 className="text-4xl mb-4 text-[#00ffff]">PROFESSIONAL PA SYSTEMS</h3>
                 <p className="text-lg text-white/70 leading-relaxed">
-                  Professional PA systems, line arrays, and subwoofers designed to deliver crystal-clear audio for venues of all sizes. From intimate clubs to massive outdoor festivals.
+                  Professional PA systems, line arrays, and subwoofers for Pittsburgh PA events. Designed to deliver crystal-clear audio for venues of all sizes. From intimate clubs to massive outdoor festivals in Western PA and surrounding regions.
                 </p>
               </div>
             </div>
@@ -197,9 +204,9 @@ export default function Home() {
                 <Radio size={80} strokeWidth={1} />
               </div>
               <div className="relative">
-                <h3 className="text-4xl mb-4 text-[#ff00ff]">MIXERS</h3>
+                <h3 className="text-4xl mb-4 text-[#ff00ff]">PROFESSIONAL MIXERS</h3>
                 <p className="text-lg text-white/70 leading-relaxed">
-                  Digital and analog mixing consoles with advanced routing, effects processing, and multi-channel capabilities. Complete control over every aspect of your sound.
+                  Digital and analog mixing consoles with advanced routing, effects processing, and multi-channel capabilities. Professional audio mixing equipment for Pittsburgh PA concerts and live events. Complete control over every aspect of your sound.
                 </p>
               </div>
             </div>
@@ -215,9 +222,9 @@ export default function Home() {
                 <Mic size={80} strokeWidth={1} />
               </div>
               <div className="relative">
-                <h3 className="text-4xl mb-4 text-[#ffff00]">MICROPHONES</h3>
+                <h3 className="text-4xl mb-4 text-[#ffff00]">PROFESSIONAL MICROPHONES</h3>
                 <p className="text-lg text-white/70 leading-relaxed">
-                  Premium vocal and instrument microphones, wireless systems, and monitoring solutions. Capture every nuance with professional-grade clarity and reliability.
+                  Premium vocal and instrument microphones, wireless systems, and monitoring solutions for Pittsburgh PA events. Capture every nuance with professional-grade clarity and reliability.
                 </p>
               </div>
             </div>
@@ -233,9 +240,9 @@ export default function Home() {
                 <Zap size={80} strokeWidth={1} />
               </div>
               <div className="relative">
-                <h3 className="text-4xl mb-4 text-[#00ffff]">POWER & PROCESSING</h3>
+                <h3 className="text-4xl mb-4 text-[#00ffff]">POWER & AUDIO PROCESSING</h3>
                 <p className="text-lg text-white/70 leading-relaxed">
-                  High-performance amplifiers, signal processors, and power distribution systems. Clean, reliable power delivery for flawless performance every time.
+                  High-performance amplifiers, signal processors, and power distribution systems for professional events. Clean, reliable power delivery for flawless performance every time in Pittsburgh PA and surrounding areas.
                 </p>
               </div>
             </div>
@@ -283,18 +290,30 @@ export default function Home() {
       {/* Footer */}
       <footer className="relative py-12 border-t-2 border-border">
         <div className="container">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-8">
             <div>
               <p className="text-3xl font-bold tracking-wider">WEIS AUDIO SYSTEMS</p>
               <p className="text-[3.6rem] font-bold text-[#00ffff] mt-2">724-448-6944</p>
               <p className="text-sm text-white/60 mt-2">Professional Stage Audio Solutions</p>
             </div>
+            <div className="flex flex-col gap-4">
+              <div>
+                <p className="text-sm font-bold text-white/80 mb-2">LEGAL</p>
+                <nav className="flex flex-col gap-1">
+                  <a href="/privacy-policy" className="text-sm text-white/60 hover:text-[#00ffff] transition-colors">Privacy Policy</a>
+                  <a href="/terms-of-service" className="text-sm text-white/60 hover:text-[#ff00ff] transition-colors">Terms of Service</a>
+                  <a href="/disclaimer" className="text-sm text-white/60 hover:text-[#ffff00] transition-colors">Disclaimer</a>
+                </nav>
+              </div>
+            </div>
             <div className="text-center md:text-right">
-              <p className="text-white/60">© 2026 Weis Audio Systems. All rights reserved.</p>
+              <p className="text-white/60 text-sm">© 2026 Weis Audio Systems. All rights reserved.</p>
+              <p className="text-white/40 text-xs mt-2">Pittsburgh, PA - Serving Western PA and Surrounding Regions</p>
             </div>
           </div>
         </div>
       </footer>
     </div>
+    </>
   );
 }
