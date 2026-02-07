@@ -152,12 +152,12 @@ export default function Home() {
       </section>
 
       {/* Services Section - Angled Layout */}
-      <section className="relative py-8 -mt-16 overflow-hidden">
+      <section className="relative py-8 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] to-[#1a1a2e]" />
         {/* Cyan neon stripe with transparent fade */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#00ffff]/0 via-[#00ffff] to-[#00ffff]/0 shadow-[0_0_20px_#00ffff] pointer-events-none z-50" />
         
-        <div className="container relative z-10">
+        <div className="container relative z-10 pt-6">
           <div className="mb-5">
             <h2 className="text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] mb-6">
               OUR
