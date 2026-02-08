@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 
-const CONTACT_EMAIL = "Markweis@protonmail.com";
+const CONTACT_EMAIL = "21stcentury.jeff@gmail.com";
 
 export default function Contact() {
   const [name, setName] = useState("");

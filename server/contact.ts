@@ -26,7 +26,7 @@ ${message}
   try {
     const result = await resend.emails.send({
       from: "noreply@weisaudio.com",
-      to: "Markweis@protonmail.com",
+      to: "21stcentury.jeff@gmail.com",
       replyTo: email,
       subject: `New Contact Form Submission: ${subject}`,
       text: emailContent,
