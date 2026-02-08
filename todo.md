@@ -101,3 +101,7 @@
 
 ## Gallery UX Improvements
 - [x] Move upload section to bottom of page (photos displayed first)
+
+## Content and Layout Updates
+- [x] Update equipment text from "Yamaha mixers" to "Yamaha and Midas mixers"
+- [x] Fix phone number in footer to stay on one line (no wrapping on mobile)

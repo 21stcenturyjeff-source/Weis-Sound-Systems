@@ -177,7 +177,7 @@ export default function HomeContent() {
                 <Radio size={80} strokeWidth={1} />
               </div>
               <div className="relative">
-                <h3 className="text-4xl mb-4 text-[#ff00ff]">YAMAHA MIXERS</h3>
+                <h3 className="text-4xl mb-4 text-[#ff00ff]">YAMAHA AND MIDAS MIXERS</h3>
                 <p className="text-lg text-white/70 leading-relaxed">
                   Digital and analog mixing consoles with advanced routing, effects processing, and multi-channel capabilities. Professional audio mixing equipment for Pittsburgh PA concerts and live events. Complete control over every aspect of your sound.
                 </p>
@@ -266,7 +266,7 @@ export default function HomeContent() {
           <div className="flex flex-col md:flex-row justify-between items-start gap-8">
             <div>
               <p className="text-3xl font-bold tracking-wider">WEIS AUDIO SYSTEMS</p>
-              <p className="text-[3.6rem] font-bold text-[#00ffff] mt-2">724-448-6944</p>
+              <p className="text-[3.6rem] font-bold text-[#00ffff] mt-2 whitespace-nowrap">724-448-6944</p>
               <p className="text-sm text-white/60 mt-2">Professional Stage Audio Solutions</p>
             </div>
             <div className="flex flex-col md:flex-row gap-8">
