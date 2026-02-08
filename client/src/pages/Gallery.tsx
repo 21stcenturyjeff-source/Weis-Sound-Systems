@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { trpc } from "@/lib/trpc";
+import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 
 const PASSWORD = "Weis6944";
+const BUCKET_NAME = "gallery-photos";
+
+interface Photo {
+  id: string;
+  title: string;
+  url: string;
+  created_at: string;
+}
 
 export default function Gallery() {
   const [password, setPassword] = useState("");
@@ -11,10 +19,36 @@ export default function Gallery() {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const { data: photos = [], refetch } = trpc.gallery.list.useQuery();
-  const uploadMutation = trpc.gallery.upload.useMutation();
-  const deleteMutation = trpc.gallery.delete.useMutation();
+  // Load photos on mount
+  useEffect(() => {
+    loadPhotos();
+  }, []);
+
+  const loadPhotos = async () => {
+    try {
+      const { data, error } = await supabase.storage
+        .from(BUCKET_NAME)
+        .list('', { sortBy: { column: 'created_at', order: 'desc' } });
+
+      if (error) throw error;
+
+      const photoList: Photo[] = data.map((file) => ({
+        id: file.name,
+        title: file.name.split('-').slice(1).join('-').replace(/\.[^/.]+$/, ""),
+        url: supabase.storage.from(BUCKET_NAME).getPublicUrl(file.name).data.publicUrl,
+        created_at: file.created_at || '',
+      }));
+
+      setPhotos(photoList);
+    } catch (err: any) {
+      console.error('Load error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleAuth = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,36 +64,49 @@ export default function Gallery() {
     e.preventDefault();
     if (!file || !title) return;
 
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("File too large (max 5MB)");
+      return;
+    }
+
     setUploading(true);
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const base64 = (e.target?.result as string)?.split(",")[1];
-      try {
-        await uploadMutation.mutateAsync({
-          title,
-          imageBase64: base64,
-          filename: file.name,
+    const fileName = `${Date.now()}-${title.replace(/[^a-z0-9]/gi, '-')}.${file.name.split('.').pop()}`;
+
+    try {
+      const { error } = await supabase.storage
+        .from(BUCKET_NAME)
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: false
         });
-        toast.success("Uploaded!");
-        setTitle("");
-        setFile(null);
-        refetch();
-      } catch (err: any) {
-        toast.error(err.message);
-      }
+
+      if (error) throw error;
+
+      toast.success("Uploaded!");
+      setTitle("");
+      setFile(null);
+      loadPhotos();
+    } catch (err: any) {
+      toast.error(err.message || "Upload failed");
+    } finally {
       setUploading(false);
-    };
-    reader.readAsDataURL(file);
+    }
   };
 
-  const handleDelete = async (id: number) => {
-    if (!confirm("Delete?")) return;
+  const handleDelete = async (fileName: string) => {
+    if (!confirm("Delete this photo?")) return;
+
     try {
-      await deleteMutation.mutateAsync({ id });
+      const { error } = await supabase.storage
+        .from(BUCKET_NAME)
+        .remove([fileName]);
+
+      if (error) throw error;
+
       toast.success("Deleted");
-      refetch();
+      loadPhotos();
     } catch (err: any) {
-      toast.error(err.message);
+      toast.error(err.message || "Delete failed");
     }
   };
 
@@ -119,31 +166,33 @@ export default function Gallery() {
         )}
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {photos.map((photo) => (
-            <div key={photo.id} className="bg-gray-900 rounded overflow-hidden">
-              <img
-                src={photo.imageUrl}
-                alt={photo.title}
-                className="w-full h-64 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="font-bold">{photo.title}</h3>
-                {isAuth && (
-                  <button
-                    onClick={() => handleDelete(photo.id)}
-                    className="mt-2 text-red-400 hover:text-red-300 text-sm"
-                  >
-                    Delete
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {photos.length === 0 && (
+        {loading ? (
+          <p className="text-center text-gray-400 py-20">Loading...</p>
+        ) : photos.length === 0 ? (
           <p className="text-center text-gray-400 py-20">No photos yet</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {photos.map((photo) => (
+              <div key={photo.id} className="bg-gray-900 rounded overflow-hidden">
+                <img
+                  src={photo.url}
+                  alt={photo.title}
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="font-bold">{photo.title}</h3>
+                  {isAuth && (
+                    <button
+                      onClick={() => handleDelete(photo.id)}
+                      className="mt-2 text-red-400 hover:text-red-300 text-sm"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>

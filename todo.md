@@ -63,4 +63,13 @@
 - [x] Check server logs for upload errors
 - [x] Fix upload endpoint JSON response (removed duplicate import)
 - [x] Test upload on dev server (works correctly)
-- [ ] Deploy fix to production
+- [x] Deploy fix to production (pushed to GitHub - Vercel will auto-deploy)
+
+## Migrate to Supabase Storage
+- [x] Install Supabase client library
+- [x] Configure Supabase credentials
+- [x] Create storage bucket for gallery photos
+- [x] Rewrite Gallery to use Supabase storage directly
+- [x] Remove tRPC backend complexity (now uploads directly from browser)
+- [x] Test upload on dev server (Supabase gallery working)
+- [ ] Deploy to production
