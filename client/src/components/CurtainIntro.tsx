@@ -7,9 +7,9 @@
  * Timing Sequence:
  * 1. Page loads, curtain closed (1 second pause)
  * 2. Curtain automatically opens slower (3 seconds)
- * 3. Logo stays on stage (4.5 seconds)
+ * 3. Logo stays on stage (2 seconds)
  * 4. Transition to main website
- * Total: 8.5 seconds
+ * Total: 6 seconds
  */
 
 import { useState, useEffect } from "react";
@@ -27,10 +27,10 @@ export default function CurtainIntro({ onComplete }: CurtainIntroProps) {
       setIsOpening(true);
     }, 1000);
 
-    // After curtain opens (3s) + pause (3s) = 6s more, then complete
+    // After curtain opens (3s) + pause (2s) = 5s more, then complete
     const completeTimer = setTimeout(() => {
       onComplete();
-    }, 7000); // 1s pause + 3s open + 3s pause = 7s total
+    }, 6000); // 1s pause + 3s open + 2s pause = 6s total
 
     return () => {
       clearTimeout(openTimer);

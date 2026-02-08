@@ -105,3 +105,7 @@
 ## Content and Layout Updates
 - [x] Update equipment text from "Yamaha mixers" to "Yamaha and Midas mixers"
 - [x] Fix phone number in footer to stay on one line (no wrapping on mobile)
+
+## Equipment Cards and Curtain Timing
+- [x] Prevent equipment card titles from wrapping (add whitespace-nowrap)
+- [x] Reduce curtain pause from 3 seconds to 2 seconds before /home redirect

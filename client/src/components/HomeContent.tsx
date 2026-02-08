@@ -159,7 +159,7 @@ export default function HomeContent() {
                 <Volume2 size={80} strokeWidth={1} />
               </div>
               <div className="relative">
-                <h3 className="text-4xl mb-4 text-[#00ffff]">PROFESSIONAL PA SYSTEMS</h3>
+                <h3 className="text-4xl mb-4 text-[#00ffff] whitespace-nowrap">PROFESSIONAL PA SYSTEMS</h3>
                 <p className="text-lg text-white/70 leading-relaxed">
                   Professional PA systems, line arrays, and subwoofers for Pittsburgh PA events. Designed to deliver crystal-clear audio for venues of all sizes. From intimate clubs to massive outdoor festivals in Western PA and surrounding regions.
                 </p>
@@ -177,7 +177,7 @@ export default function HomeContent() {
                 <Radio size={80} strokeWidth={1} />
               </div>
               <div className="relative">
-                <h3 className="text-4xl mb-4 text-[#ff00ff]">YAMAHA AND MIDAS MIXERS</h3>
+                <h3 className="text-4xl mb-4 text-[#ff00ff] whitespace-nowrap">YAMAHA AND MIDAS MIXERS</h3>
                 <p className="text-lg text-white/70 leading-relaxed">
                   Digital and analog mixing consoles with advanced routing, effects processing, and multi-channel capabilities. Professional audio mixing equipment for Pittsburgh PA concerts and live events. Complete control over every aspect of your sound.
                 </p>
@@ -195,7 +195,7 @@ export default function HomeContent() {
                 <Mic size={80} strokeWidth={1} />
               </div>
               <div className="relative">
-                <h3 className="text-4xl mb-4 text-[#ffff00]">SHURE MICROPHONES</h3>
+                <h3 className="text-4xl mb-4 text-[#ffff00] whitespace-nowrap">SHURE MICROPHONES</h3>
                 <p className="text-lg text-white/70 leading-relaxed">
                   Premium vocal and instrument microphones, wireless systems, and monitoring solutions for Pittsburgh PA events. Capture every nuance with professional-grade clarity and reliability.
                 </p>
@@ -213,7 +213,7 @@ export default function HomeContent() {
                 <Zap size={80} strokeWidth={1} />
               </div>
               <div className="relative">
-                <h3 className="text-4xl mb-4 text-[#00ffff]">POWER & AUDIO PROCESSING</h3>
+                <h3 className="text-4xl mb-4 text-[#00ffff] whitespace-nowrap">POWER & AUDIO PROCESSING</h3>
                 <p className="text-lg text-white/70 leading-relaxed">
                   High-performance amplifiers, signal processors, and power distribution systems for professional events. Clean, reliable power delivery for flawless performance every time in Pittsburgh PA and surrounding areas.
                 </p>
