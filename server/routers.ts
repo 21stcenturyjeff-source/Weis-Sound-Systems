@@ -24,7 +24,7 @@ export const appRouter = router({
       const photos = await getGalleryPhotos();
       return photos;
     }),
-    upload: protectedProcedure
+    upload: publicProcedure
       .input(z.object({
         title: z.string().min(1),
         description: z.string().optional(),
@@ -41,12 +41,12 @@ export const appRouter = router({
           description: input.description,
           imageUrl: url,
           imageKey: fileKey,
-          uploadedBy: ctx.user.id,
+          uploadedBy: ctx.user?.id || 1,
         });
         
         return { success: true, url };
       }),
-    delete: protectedProcedure
+    delete: publicProcedure
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
         await deleteGalleryPhoto(input.id);

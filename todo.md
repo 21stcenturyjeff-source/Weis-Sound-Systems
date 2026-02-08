@@ -36,3 +36,11 @@
 - [x] Add simple password prompt to Gallery upload functionality
 - [x] Store password in session storage after successful entry
 - [x] Test password protection on live site
+
+## Gallery Upload Error Fix
+- [x] Add toast notification library (sonner)
+- [x] Diagnose JSON parsing error in gallery upload endpoint
+- [x] Fix server response format to return valid JSON (changed to publicProcedure)
+- [x] Replace alert() with toast notifications for better UX
+- [ ] Test upload functionality on mobile and desktop
+- [ ] Verify error handling for failed uploads

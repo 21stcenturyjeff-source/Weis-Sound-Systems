@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Loader2, Upload, Trash2, Lock } from "lucide-react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 
 const GALLERY_PASSWORD = "Weis6944";
 
@@ -35,6 +36,7 @@ export default function Gallery() {
   // Upload mutation
   const uploadMutation = trpc.gallery.upload.useMutation({
     onSuccess: () => {
+      toast.success("Photo uploaded successfully!");
       setTitle("");
       setDescription("");
       setSelectedFile(null);
@@ -43,17 +45,18 @@ export default function Gallery() {
       refetch();
     },
     onError: (error) => {
-      alert(`Upload failed: ${error.message}`);
+      toast.error(`Upload failed: ${error.message}`);
     },
   });
 
   // Delete mutation
   const deleteMutation = trpc.gallery.delete.useMutation({
     onSuccess: () => {
+      toast.success("Photo deleted successfully");
       refetch();
     },
     onError: (error) => {
-      alert(`Delete failed: ${error.message}`);
+      toast.error(`Delete failed: ${error.message}`);
     },
   });
 
@@ -64,8 +67,9 @@ export default function Gallery() {
       setShowPasswordPrompt(false);
       setPasswordInput("");
       setIsDialogOpen(true);
+      toast.success("Authentication successful");
     } else {
-      alert("Incorrect password");
+      toast.error("Incorrect password");
       setPasswordInput("");
     }
   };
@@ -80,13 +84,30 @@ export default function Gallery() {
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
-      setSelectedFile(e.target.files[0]);
+      const file = e.target.files[0];
+      
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("File size must be less than 5MB");
+        e.target.value = "";
+        return;
+      }
+      
+      // Check file type
+      if (!file.type.startsWith('image/')) {
+        toast.error("Please select an image file");
+        e.target.value = "";
+        return;
+      }
+      
+      setSelectedFile(file);
+      toast.success(`Selected: ${file.name}`);
     }
   };
 
   const handleUpload = async () => {
     if (!selectedFile || !title.trim()) {
-      alert("Please provide a title and select an image");
+      toast.error("Please provide a title and select an image");
       return;
     }
 
@@ -95,19 +116,32 @@ export default function Gallery() {
       const reader = new FileReader();
       reader.onload = async (e) => {
         const base64 = (e.target?.result as string)?.split(",")[1];
-        if (!base64) return;
+        if (!base64) {
+          toast.error("Failed to read file");
+          setIsUploading(false);
+          return;
+        }
 
-        await uploadMutation.mutateAsync({
-          title: title.trim(),
-          description: description.trim(),
-          imageBase64: base64,
-          filename: selectedFile.name,
-        });
+        try {
+          await uploadMutation.mutateAsync({
+            title: title.trim(),
+            description: description.trim() || undefined,
+            imageBase64: base64,
+            filename: selectedFile.name,
+          });
+        } catch (error) {
+          console.error("Upload error:", error);
+        } finally {
+          setIsUploading(false);
+        }
+      };
+      reader.onerror = () => {
+        toast.error("Failed to read file");
+        setIsUploading(false);
       };
       reader.readAsDataURL(selectedFile);
     } catch (error) {
       console.error("Upload failed:", error);
-    } finally {
       setIsUploading(false);
     }
   };
@@ -199,7 +233,7 @@ export default function Gallery() {
               </div>
               
               <div>
-                <label className="block text-sm font-medium mb-2">Photo *</label>
+                <label className="block text-sm font-medium mb-2">Photo * (Max 5MB)</label>
                 <input
                   ref={fileInputRef}
                   type="file"
