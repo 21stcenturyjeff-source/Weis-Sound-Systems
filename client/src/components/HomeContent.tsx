@@ -100,13 +100,6 @@ export default function HomeContent() {
               >
                 GET A QUOTE
               </Button>
-              <Button 
-                size="lg"
-                variant="outline"
-                className="h-14 px-8 text-lg font-bold tracking-wider border-2 border-white text-white hover:bg-white hover:text-black transition-all duration-200 w-48"
-              >
-                VIEW EQUIPMENT
-              </Button>
               <a href="/gallery" className="inline-block">
                 <Button 
                   size="lg"

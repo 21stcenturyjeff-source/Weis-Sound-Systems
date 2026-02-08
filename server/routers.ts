@@ -1,10 +1,10 @@
-import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import { getGalleryPhotos, addGalleryPhoto, deleteGalleryPhoto } from "./db";
 import { storagePut } from "./storage";
+import { COOKIE_NAME } from "@shared/const";
 
 export const appRouter = router({
   system: systemRouter,
@@ -20,7 +20,10 @@ export const appRouter = router({
   }),
 
   gallery: router({
-    list: publicProcedure.query(() => getGalleryPhotos()),
+    list: publicProcedure.query(async () => {
+      const photos = await getGalleryPhotos();
+      return photos;
+    }),
     upload: protectedProcedure
       .input(z.object({
         title: z.string().min(1),

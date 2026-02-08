@@ -1,25 +1,82 @@
 import { useState, useRef } from "react";
-import { trpc } from "@/lib/trpc";
-import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Loader2, Upload, Trash2 } from "lucide-react";
+import { Loader2, Upload, Trash2, Lock } from "lucide-react";
 import { Link } from "wouter";
+import { trpc } from "@/lib/trpc";
+
+const GALLERY_PASSWORD = "Weis6944";
+
+interface GalleryPhoto {
+  id: number;
+  title: string;
+  description?: string;
+  imageUrl: string;
+  uploadedBy: number;
+}
 
 export default function Gallery() {
-  const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
-  const { data: photos, isLoading, refetch } = trpc.gallery.list.useQuery();
-  const uploadMutation = trpc.gallery.upload.useMutation();
-  const deleteMutation = trpc.gallery.delete.useMutation();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem("gallery_auth") === "true";
+  });
+  const [passwordInput, setPasswordInput] = useState("");
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+
+  // Load gallery photos
+  const { data: photos = [], isLoading, refetch } = trpc.gallery.list.useQuery();
+
+  // Upload mutation
+  const uploadMutation = trpc.gallery.upload.useMutation({
+    onSuccess: () => {
+      setTitle("");
+      setDescription("");
+      setSelectedFile(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      setIsDialogOpen(false);
+      refetch();
+    },
+    onError: (error) => {
+      alert(`Upload failed: ${error.message}`);
+    },
+  });
+
+  // Delete mutation
+  const deleteMutation = trpc.gallery.delete.useMutation({
+    onSuccess: () => {
+      refetch();
+    },
+    onError: (error) => {
+      alert(`Delete failed: ${error.message}`);
+    },
+  });
+
+  const handlePasswordSubmit = () => {
+    if (passwordInput === GALLERY_PASSWORD) {
+      setIsAuthenticated(true);
+      sessionStorage.setItem("gallery_auth", "true");
+      setShowPasswordPrompt(false);
+      setPasswordInput("");
+      setIsDialogOpen(true);
+    } else {
+      alert("Incorrect password");
+      setPasswordInput("");
+    }
+  };
+
+  const handleUploadClick = () => {
+    if (!isAuthenticated) {
+      setShowPasswordPrompt(true);
+    } else {
+      setIsDialogOpen(true);
+    }
+  };
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
@@ -28,8 +85,8 @@ export default function Gallery() {
   };
 
   const handleUpload = async () => {
-    if (!selectedFile || !title) {
-      alert("Please select a file and enter a title");
+    if (!selectedFile || !title.trim()) {
+      alert("Please provide a title and select an image");
       return;
     }
 
@@ -37,213 +94,186 @@ export default function Gallery() {
     try {
       const reader = new FileReader();
       reader.onload = async (e) => {
-        const base64 = (e.target?.result as string).split(',')[1];
+        const base64 = (e.target?.result as string)?.split(",")[1];
+        if (!base64) return;
+
         await uploadMutation.mutateAsync({
-          title,
-          description,
+          title: title.trim(),
+          description: description.trim(),
           imageBase64: base64,
           filename: selectedFile.name,
         });
-        setTitle("");
-        setDescription("");
-        setSelectedFile(null);
-        if (fileInputRef.current) fileInputRef.current.value = "";
-        refetch();
       };
       reader.readAsDataURL(selectedFile);
+    } catch (error) {
+      console.error("Upload failed:", error);
     } finally {
       setIsUploading(false);
     }
   };
 
   const handleDelete = async (id: number) => {
-    if (confirm("Are you sure you want to delete this photo?")) {
-      await deleteMutation.mutateAsync({ id });
-      refetch();
-    }
+    if (!confirm("Delete this photo?")) return;
+    await deleteMutation.mutateAsync({ id });
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Header */}
-      <div className="border-b border-border py-8">
-        <div className="container">
-          <div className="flex items-center justify-between">
-            <div>
-              <Link href="/home" className="text-sm text-white/60 hover:text-[#00ffff] mb-4 inline-block">
-                ← Back to Home
-              </Link>
-              <h1 className="text-5xl font-bold mb-2">STAGE GALLERY</h1>
-              <p className="text-white/70">Showcase your performances and stage setups</p>
-            </div>
-            {user && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="bg-[#00ffff] text-black hover:bg-[#00ffff]/90">
-                    <Upload className="mr-2" size={20} />
-                    Upload Photo
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="bg-card border-border">
-                  <DialogHeader>
-                    <DialogTitle>Upload Stage Photo</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Title *</label>
-                      <Input
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder="e.g., Pittsburgh Concert Setup"
-                        className="bg-background border-border"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Description</label>
-                      <Textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Add details about the event or setup..."
-                        className="bg-background border-border"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Photo *</label>
-                      <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileSelect}
-                        className="w-full"
-                      />
-                      {selectedFile && (
-                        <p className="text-sm text-white/60 mt-2">Selected: {selectedFile.name}</p>
-                      )}
-                    </div>
-                    <Button
-                      onClick={handleUpload}
-                      disabled={isUploading}
-                      className="w-full bg-[#00ffff] text-black hover:bg-[#00ffff]/90"
-                    >
-                      {isUploading ? (
-                        <>
-                          <Loader2 className="mr-2 animate-spin" size={20} />
-                          Uploading...
-                        </>
-                      ) : (
-                        "Upload Photo"
-                      )}
-                    </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Gallery Grid */}
+    <div className="min-h-screen bg-black text-white">
       <div className="container py-12">
-        {isLoading ? (
-          <div className="flex justify-center items-center py-20">
-            <Loader2 className="animate-spin text-[#00ffff]" size={40} />
+        <Link href="/home">
+          <a className="text-cyan-400 hover:text-cyan-300 mb-8 inline-block">← Back to Home</a>
+        </Link>
+        
+        <div className="flex justify-between items-start mb-12">
+          <div>
+            <h1 className="text-4xl font-bold mb-2">STAGE GALLERY</h1>
+            <p className="text-gray-400">Showcase your performances and stage setups</p>
           </div>
-        ) : photos && photos.length > 0 ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <Button 
+            onClick={handleUploadClick}
+            className="bg-cyan-500 hover:bg-cyan-600 text-black font-bold"
+          >
+            <Upload className="mr-2 w-4 h-4" />
+            Upload Photo
+          </Button>
+        </div>
+
+        {/* Password Prompt Dialog */}
+        <Dialog open={showPasswordPrompt} onOpenChange={setShowPasswordPrompt}>
+          <DialogContent className="bg-gray-900 border-gray-700">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Lock className="w-5 h-5" />
+                Enter Password
+              </DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <p className="text-gray-400 text-sm">Enter the gallery password to upload photos</p>
+              <input
+                type="password"
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                onKeyPress={(e) => e.key === "Enter" && handlePasswordSubmit()}
+                placeholder="Password"
+                className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white"
+                autoFocus
+              />
+              <Button
+                onClick={handlePasswordSubmit}
+                className="w-full bg-cyan-500 hover:bg-cyan-600 text-black font-bold"
+              >
+                Submit
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Upload Dialog */}
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogContent className="bg-gray-900 border-gray-700">
+            <DialogHeader>
+              <DialogTitle>Upload Stage Photo</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Title *</label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="e.g., Pittsburgh Concert Setup"
+                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2">Description</label>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Optional details about the setup or event"
+                  className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white"
+                  rows={3}
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-2">Photo *</label>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                  className="w-full text-white file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-cyan-500 file:text-black hover:file:bg-cyan-600"
+                />
+                {selectedFile && (
+                  <p className="text-sm text-cyan-400 mt-2">{selectedFile.name}</p>
+                )}
+              </div>
+              
+              <Button
+                onClick={handleUpload}
+                disabled={isUploading || !selectedFile || !title.trim()}
+                className="w-full bg-cyan-500 hover:bg-cyan-600 text-black font-bold"
+              >
+                {isUploading ? (
+                  <>
+                    <Loader2 className="mr-2 w-4 h-4 animate-spin" />
+                    Uploading...
+                  </>
+                ) : (
+                  "Upload Photo"
+                )}
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+
+        {isLoading ? (
+          <div className="flex justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-cyan-400" />
+          </div>
+        ) : photos.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-gray-400 mb-4">No photos yet. Be the first to upload!</p>
+            <Button 
+              onClick={handleUploadClick}
+              className="bg-cyan-500 hover:bg-cyan-600 text-black font-bold"
+            >
+              Upload First Photo
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {photos.map((photo) => (
-              <Card key={photo.id} className="bg-card border-border overflow-hidden hover:border-[#00ffff] transition-colors group">
-                <div className="relative overflow-hidden h-64 bg-black">
+              <Card key={photo.id} className="bg-gray-900 border-gray-700 overflow-hidden hover:border-cyan-500 transition">
+                <div className="aspect-video bg-gray-800 overflow-hidden">
                   <img
                     src={photo.imageUrl}
                     alt={photo.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    className="w-full h-full object-cover hover:scale-105 transition"
                   />
-                  {user && (
-                    <button
-                      onClick={() => handleDelete(photo.id)}
-                      className="absolute top-2 right-2 bg-red-500/80 hover:bg-red-600 p-2 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                  )}
                 </div>
                 <div className="p-4">
-                  <h3 className="text-xl font-bold text-[#00ffff] mb-2">{photo.title}</h3>
+                  <h3 className="font-bold text-lg mb-2">{photo.title}</h3>
                   {photo.description && (
-                    <p className="text-white/70 text-sm mb-3">{photo.description}</p>
+                    <p className="text-gray-400 text-sm mb-4">{photo.description}</p>
                   )}
-                  <p className="text-white/50 text-xs">
-                    {new Date(photo.createdAt).toLocaleDateString()}
-                  </p>
+                  {isAuthenticated && (
+                    <Button
+                      onClick={() => handleDelete(photo.id)}
+                      variant="ghost"
+                      size="sm"
+                      className="text-red-400 hover:text-red-300 hover:bg-red-950"
+                    >
+                      <Trash2 className="w-4 h-4 mr-2" />
+                      Delete
+                    </Button>
+                  )}
                 </div>
               </Card>
             ))}
-          </div>
-        ) : (
-          <div className="text-center py-20">
-            <p className="text-white/60 text-lg mb-6">No photos yet. Be the first to upload!</p>
-            {user && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="bg-[#00ffff] text-black hover:bg-[#00ffff]/90">
-                    <Upload className="mr-2" size={20} />
-                    Upload First Photo
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="bg-card border-border">
-                  <DialogHeader>
-                    <DialogTitle>Upload Stage Photo</DialogTitle>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Title *</label>
-                      <Input
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder="e.g., Pittsburgh Concert Setup"
-                        className="bg-background border-border"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Description</label>
-                      <Textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Add details about the event or setup..."
-                        className="bg-background border-border"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Photo *</label>
-                      <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileSelect}
-                        className="w-full"
-                      />
-                      {selectedFile && (
-                        <p className="text-sm text-white/60 mt-2">Selected: {selectedFile.name}</p>
-                      )}
-                    </div>
-                    <Button
-                      onClick={handleUpload}
-                      disabled={isUploading}
-                      className="w-full bg-[#00ffff] text-black hover:bg-[#00ffff]/90"
-                    >
-                      {isUploading ? (
-                        <>
-                          <Loader2 className="mr-2 animate-spin" size={20} />
-                          Uploading...
-                        </>
-                      ) : (
-                        "Upload Photo"
-                      )}
-                    </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            )}
           </div>
         )}
       </div>

@@ -29,5 +29,10 @@
 - [ ] Test gallery upload functionality with authentication
 - [ ] Verify image storage to S3
 - [ ] Test gallery display with multiple photos
-- [ ] Push all changes to GitHub
+- [x] Push all changes to GitHub
 - [ ] Deploy to Vercel
+
+## Gallery Password Protection
+- [x] Add simple password prompt to Gallery upload functionality
+- [x] Store password in session storage after successful entry
+- [x] Test password protection on live site

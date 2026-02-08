@@ -4,8 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, TRPCClientError } from "@trpc/client";
 import { createRoot } from "react-dom/client";
 import superjson from "superjson";
-import App from "./App";
 import { getLoginUrl } from "./const";
+import App from "./App";
 import "./index.css";
 
 const queryClient = new QueryClient();
@@ -43,10 +43,19 @@ const trpcClient = trpc.createClient({
       url: "/api/trpc",
       transformer: superjson,
       fetch(input, init) {
-        return globalThis.fetch(input, {
-          ...(init ?? {}),
-          credentials: "include",
-        });
+        try {
+          // Ensure input is a valid string URL
+          if (typeof input !== 'string') {
+            throw new Error('Invalid URL input');
+          }
+          return globalThis.fetch(input, {
+            ...(init ?? {}),
+            credentials: "include",
+          });
+        } catch (error) {
+          console.error('[tRPC] Fetch error:', error);
+          throw error;
+        }
       },
     }),
   ],
