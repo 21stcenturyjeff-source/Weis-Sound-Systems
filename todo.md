@@ -81,5 +81,20 @@
 
 ## Fix Supabase Gallery Connection
 - [ ] Verify Supabase credentials match the project with uploaded photos
-- [ ] Test gallery displays photos correctly
-- [ ] Push to GitHub for Vercel deployment
+- [x] Test gallery displays photos (all 10 photos loading perfectly!) correctly
+- [x] Push to GitHub for Vercel deployment (with correct author)
+
+## Fix Supabase Storage Security
+- [x] Create SQL to allow public uploads to gallery-photos bucket
+- [x] Create SQL to allow public reads from gallery-photos bucket
+- [ ] Test upload works after security fix
+- [ ] Test photos display after security fix
+
+## Switch to 21st Dev Labs Supabase
+- [x] Get Supabase URL and anon key for "Hosting @ 21st Dev Labs" project
+- [x] Update gallery config to use new credentials and weis-gallery-photos bucket
+- [x] Create weis-gallery-photos bucket
+- [x] Set up security policies for weis-gallery-photos
+- [x] Re-upload 10 photos to new bucket
+- [x] Test gallery displays photos (all 10 photos loading perfectly!)
+- [ ] Push to GitHub

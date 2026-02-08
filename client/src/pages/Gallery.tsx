@@ -4,7 +4,7 @@ import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 
 const PASSWORD = "Weis6944";
-const BUCKET_NAME = "gallery-photos";
+const BUCKET_NAME = "weis-gallery-photos";
 
 interface Photo {
   id: string;
