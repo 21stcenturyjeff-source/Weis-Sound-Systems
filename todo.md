@@ -115,3 +115,9 @@
 - [x] Implement pinch-to-zoom functionality
 - [x] Add close button (X) and back button navigation
 - [x] Test on mobile and desktop
+
+## Contact Page and Email
+- [x] Create contact page with email form
+- [x] Set up email sending to Markweis@protonmail.com via Resend
+- [x] Update "CONTACT US NOW" button to link to contact page
+- [x] Add contact route to App.tsx

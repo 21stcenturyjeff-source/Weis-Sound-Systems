@@ -182,15 +182,19 @@ export default function HomeContent() {
             Get in touch for equipment rentals, technical support, or custom audio solutions for your next event.
           </p>
           
-          <Button 
-            size="lg"
-            className="h-16 px-12 text-xl font-bold tracking-wider bg-[#ff00ff] text-white hover:bg-[#ff00ff]/90 hover:scale-105 transition-all duration-200"
-            style={{
-              boxShadow: "0 0 30px rgba(255, 0, 255, 0.6), 6px 6px 0 rgba(0, 255, 255, 0.4)"
-            }}
-          >
-            CONTACT US NOW
-          </Button>
+          <Link href="/contact">
+            <a>
+              <Button 
+                size="lg"
+                className="h-16 px-12 text-xl font-bold tracking-wider bg-[#ff00ff] text-white hover:bg-[#ff00ff]/90 hover:scale-105 transition-all duration-200"
+                style={{
+                  boxShadow: "0 0 30px rgba(255, 0, 255, 0.6), 6px 6px 0 rgba(0, 255, 255, 0.4)"
+                }}
+              >
+                CONTACT US NOW
+              </Button>
+            </a>
+          </Link>
         </div>
       </section>
 

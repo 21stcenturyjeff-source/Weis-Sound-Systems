@@ -10,6 +10,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import Disclaimer from "./pages/Disclaimer";
 import Gallery from "./pages/Gallery";
+import Contact from "./pages/Contact";
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
@@ -17,6 +18,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/home"} component={HomeNoAnimation} />
       <Route path={"/gallery"} component={Gallery} />
+      <Route path={"/contact"} component={Contact} />
       <Route path={"/privacy-policy"} component={PrivacyPolicy} />
       <Route path={"/terms-of-service"} component={TermsOfService} />
       <Route path={"/disclaimer"} component={Disclaimer} />

@@ -5,6 +5,7 @@ import { z } from "zod";
 import { getGalleryPhotos, addGalleryPhoto, deleteGalleryPhoto } from "./db";
 import { storagePut } from "./storage";
 import { COOKIE_NAME } from "@shared/const";
+import { sendContactEmail } from "./contact";
 
 export const appRouter = router({
   system: systemRouter,
@@ -50,6 +51,21 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
         await deleteGalleryPhoto(input.id);
+        return { success: true };
+      }),
+  }),
+
+  contact: router({
+    sendEmail: publicProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        email: z.string().email(),
+        phone: z.string().optional(),
+        subject: z.string().min(1),
+        message: z.string().min(1),
+      }))
+      .mutation(async ({ input }) => {
+        await sendContactEmail(input);
         return { success: true };
       }),
   }),
