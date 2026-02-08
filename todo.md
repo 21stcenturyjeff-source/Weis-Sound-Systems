@@ -72,4 +72,14 @@
 - [x] Rewrite Gallery to use Supabase storage directly
 - [x] Remove tRPC backend complexity (now uploads directly from browser)
 - [x] Test upload on dev server (Supabase gallery working)
-- [ ] Deploy to production
+- [x] Deploy to production (checkpoint saved - ready for Vercel)
+
+## Upload User Photos to Supabase
+- [x] Upload 11 stage/equipment photos to Supabase storage
+- [ ] Verify photos display in gallery
+- [x] Push to GitHub with working gallery
+
+## Fix Supabase Gallery Connection
+- [ ] Verify Supabase credentials match the project with uploaded photos
+- [ ] Test gallery displays photos correctly
+- [ ] Push to GitHub for Vercel deployment

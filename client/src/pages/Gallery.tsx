@@ -29,10 +29,13 @@ export default function Gallery() {
 
   const loadPhotos = async () => {
     try {
+      console.log('Loading photos from Supabase...');
       const { data, error } = await supabase.storage
         .from(BUCKET_NAME)
         .list('', { sortBy: { column: 'created_at', order: 'desc' } });
 
+      console.log('Supabase response:', { data, error });
+      
       if (error) throw error;
 
       const photoList: Photo[] = data.map((file) => ({
@@ -42,9 +45,11 @@ export default function Gallery() {
         created_at: file.created_at || '',
       }));
 
+      console.log('Loaded photos:', photoList.length);
       setPhotos(photoList);
     } catch (err: any) {
       console.error('Load error:', err);
+      toast.error('Failed to load photos');
     } finally {
       setLoading(false);
     }
