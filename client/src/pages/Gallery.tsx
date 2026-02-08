@@ -24,8 +24,11 @@ export default function Gallery() {
   const [loading, setLoading] = useState(true);
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
   const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
   const imgRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const touchStartDistance = useRef(0);
+  const panStart = useRef({ x: 0, y: 0 });
 
   // Load photos on mount
   useEffect(() => {
@@ -59,11 +62,30 @@ export default function Gallery() {
         const scale = distance / touchStartDistance.current;
         setZoom((prev) => Math.min(Math.max(prev * scale, 1), 5));
         touchStartDistance.current = distance;
+      } else if (e.touches.length === 1 && zoom > 1) {
+        // Single finger pan when zoomed
+        const touch = e.touches[0];
+        const deltaX = touch.clientX - panStart.current.x;
+        const deltaY = touch.clientY - panStart.current.y;
+        setPan((prev) => ({
+          x: prev.x + deltaX,
+          y: prev.y + deltaY,
+        }));
+        panStart.current = { x: touch.clientX, y: touch.clientY };
+      }
+    };
+
+    const handleTouchStartPan = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        panStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
       }
     };
 
     const img = imgRef.current;
-    img.addEventListener("touchstart", handleTouchStart);
+    img.addEventListener("touchstart", (e) => {
+      handleTouchStart(e);
+      handleTouchStartPan(e);
+    });
     img.addEventListener("touchmove", handleTouchMove);
 
     return () => {
@@ -178,6 +200,7 @@ export default function Gallery() {
   const closeLightbox = () => {
     setSelectedPhoto(null);
     setZoom(1);
+    setPan({ x: 0, y: 0 });
   };
 
   return (
@@ -202,6 +225,7 @@ export default function Gallery() {
                   onClick={() => {
                     setSelectedPhoto(photo);
                     setZoom(1);
+                    setPan({ x: 0, y: 0 });
                   }}
                   className="w-full h-64 overflow-hidden hover:opacity-80 transition-opacity cursor-pointer"
                 >
@@ -244,16 +268,17 @@ export default function Gallery() {
 
             {/* Image Container */}
             <div 
-              className="w-full h-full flex items-center justify-center overflow-auto"
+              ref={containerRef}
+              className="w-full h-full flex items-center justify-center overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               <img
                 ref={imgRef}
                 src={selectedPhoto.url}
                 alt={selectedPhoto.title}
-                className="max-w-full max-h-full object-contain transition-transform duration-200"
+                className="object-contain transition-transform duration-200 cursor-grab active:cursor-grabbing"
                 style={{
-                  transform: `scale(${zoom})`,
+                  transform: `scale(${zoom}) translate(${pan.x}px, ${pan.y}px)`,
                   touchAction: "none",
                 }}
               />
