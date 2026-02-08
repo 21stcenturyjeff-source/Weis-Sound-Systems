@@ -98,3 +98,6 @@
 - [x] Re-upload 10 photos to new bucket
 - [x] Test gallery displays photos (all 10 photos loading perfectly!)
 - [x] Push to GitHub (Vercel deploying now)
+
+## Gallery UX Improvements
+- [x] Move upload section to bottom of page (photos displayed first)

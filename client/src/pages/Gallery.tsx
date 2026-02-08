@@ -124,7 +124,37 @@ export default function Gallery() {
 
         <h1 className="text-4xl font-bold mb-8">STAGE GALLERY</h1>
 
-        {/* Upload Section */}
+        {/* Gallery Grid */}
+        {loading ? (
+          <p className="text-center text-gray-400 py-20">Loading...</p>
+        ) : photos.length === 0 ? (
+          <p className="text-center text-gray-400 py-20">No photos yet</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+            {photos.map((photo) => (
+              <div key={photo.id} className="bg-gray-900 rounded overflow-hidden">
+                <img
+                  src={photo.url}
+                  alt={photo.title}
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="font-bold">{photo.title}</h3>
+                  {isAuth && (
+                    <button
+                      onClick={() => handleDelete(photo.id)}
+                      className="mt-2 text-red-400 hover:text-red-300 text-sm"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Upload Section - Now at Bottom */}
         {!isAuth ? (
           <form onSubmit={handleAuth} className="mb-8 bg-gray-900 p-6 rounded">
             <h2 className="text-xl mb-4">Upload Photo (Password Required)</h2>
@@ -168,36 +198,6 @@ export default function Gallery() {
               {uploading ? "Uploading..." : "Upload"}
             </button>
           </form>
-        )}
-
-        {/* Gallery Grid */}
-        {loading ? (
-          <p className="text-center text-gray-400 py-20">Loading...</p>
-        ) : photos.length === 0 ? (
-          <p className="text-center text-gray-400 py-20">No photos yet</p>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {photos.map((photo) => (
-              <div key={photo.id} className="bg-gray-900 rounded overflow-hidden">
-                <img
-                  src={photo.url}
-                  alt={photo.title}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="font-bold">{photo.title}</h3>
-                  {isAuth && (
-                    <button
-                      onClick={() => handleDelete(photo.id)}
-                      className="mt-2 text-red-400 hover:text-red-300 text-sm"
-                    >
-                      Delete
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
         )}
       </div>
     </div>
