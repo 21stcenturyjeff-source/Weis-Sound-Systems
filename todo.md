@@ -42,5 +42,5 @@
 - [x] Diagnose JSON parsing error in gallery upload endpoint
 - [x] Fix server response format to return valid JSON (changed to publicProcedure)
 - [x] Replace alert() with toast notifications for better UX
-- [ ] Test upload functionality on mobile and desktop
-- [ ] Verify error handling for failed uploads
+- [x] Test upload functionality on mobile and desktop
+- [x] Verify error handling for failed uploads
