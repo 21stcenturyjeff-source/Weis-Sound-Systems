@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Volume2, Mic, Radio, Zap } from "lucide-react";
 import { SEOHead } from "@/components/SEOHead";
+import { Link } from "wouter";
 
 export default function HomeContent() {
   return (
@@ -91,26 +92,32 @@ export default function HomeContent() {
             
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4">
-              <Button 
-                size="lg"
-                className="h-14 px-8 text-lg font-bold tracking-wider bg-[#00ffff] text-black hover:bg-[#00ffff]/90 hover:scale-105 transition-all duration-200 w-48"
-                style={{
-                  boxShadow: "0 0 20px rgba(0, 255, 255, 0.5), 4px 4px 0 rgba(255, 0, 255, 0.4)"
-                }}
-              >
-                GET A QUOTE
-              </Button>
-              <a href="/gallery" className="inline-block">
-                <Button 
-                  size="lg"
-                  className="h-14 px-8 text-lg font-bold tracking-wider bg-[#ff00ff] text-white hover:bg-[#ff00ff]/90 hover:scale-105 transition-all duration-200 w-48"
-                  style={{
-                    boxShadow: "0 0 20px rgba(255, 0, 255, 0.5), 4px 4px 0 rgba(0, 255, 255, 0.4)"
-                  }}
-                >
-                  VIEW GALLERY
-                </Button>
-              </a>
+              <Link href="/contact">
+                <a className="inline-block">
+                  <Button 
+                    size="lg"
+                    className="h-14 px-8 text-lg font-bold tracking-wider bg-[#00ffff] text-black hover:bg-[#00ffff]/90 hover:scale-105 transition-all duration-200 w-48"
+                    style={{
+                      boxShadow: "0 0 20px rgba(0, 255, 255, 0.5), 4px 4px 0 rgba(255, 0, 255, 0.4)"
+                    }}
+                  >
+                    GET A QUOTE
+                  </Button>
+                </a>
+              </Link>
+              <Link href="/gallery">
+                <a className="inline-block">
+                  <Button 
+                    size="lg"
+                    className="h-14 px-8 text-lg font-bold tracking-wider bg-[#ff00ff] text-white hover:bg-[#ff00ff]/90 hover:scale-105 transition-all duration-200 w-48"
+                    style={{
+                      boxShadow: "0 0 20px rgba(255, 0, 255, 0.5), 4px 4px 0 rgba(0, 255, 255, 0.4)"
+                    }}
+                  >
+                    VIEW GALLERY
+                  </Button>
+                </a>
+              </Link>
             </div>
           </div>
         </div>
