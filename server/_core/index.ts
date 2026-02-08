@@ -35,6 +35,34 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+  
+  // Dynamic sitemap.xml endpoint
+  app.get("/sitemap.xml", (req, res) => {
+    const baseUrl = "https://weisaudio.com";
+    
+    // Static pages
+    const pages = [
+      { url: "/", changefreq: "weekly", priority: "1.0" },
+      { url: "/home", changefreq: "weekly", priority: "0.9" },
+      { url: "/gallery", changefreq: "weekly", priority: "0.8" },
+      { url: "/privacy", changefreq: "monthly", priority: "0.5" },
+      { url: "/terms", changefreq: "monthly", priority: "0.5" },
+      { url: "/disclaimer", changefreq: "monthly", priority: "0.5" },
+    ];
+    
+    // Build XML
+    const urlEntries = pages.map(page => 
+      `  <url>\n    <loc>${baseUrl}${page.url}</loc>\n    <changefreq>${page.changefreq}</changefreq>\n    <priority>${page.priority}</priority>\n  </url>`
+    ).join("\n");
+    
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urlEntries}
+</urlset>`;
+    
+    res.type("application/xml").send(xml);
+  });
+  
   // tRPC API
   app.use(
     "/api/trpc",
