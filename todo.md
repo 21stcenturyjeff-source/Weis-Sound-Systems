@@ -44,3 +44,17 @@
 - [x] Replace alert() with toast notifications for better UX
 - [x] Test upload functionality on mobile and desktop
 - [x] Verify error handling for failed uploads
+
+## Vercel Deployment Verification
+- [ ] Check latest Vercel deployment status
+- [ ] Verify production has latest toast notification changes
+- [ ] Test upload functionality on production (weisaudio.systems)
+- [ ] Confirm JSON parsing error is resolved on production
+
+## Gallery Simplification
+- [x] Strip Gallery component to bare minimum code
+- [x] Remove complex authentication flow
+- [x] Remove unnecessary dialog components
+- [x] Simplify upload to basic form
+- [x] Test fast page load
+- [ ] Deploy simplified version
