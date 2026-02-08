@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
+import { X } from "lucide-react";
 
 const PASSWORD = "Weis6944";
 const BUCKET_NAME = "weis-gallery-photos";
@@ -21,11 +22,70 @@ export default function Gallery() {
   const [uploading, setUploading] = useState(false);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+  const [zoom, setZoom] = useState(1);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const touchStartDistance = useRef(0);
 
   // Load photos on mount
   useEffect(() => {
     loadPhotos();
   }, []);
+
+  // Handle pinch-to-zoom
+  useEffect(() => {
+    if (!selectedPhoto || !imgRef.current) return;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        const touch1 = e.touches[0];
+        const touch2 = e.touches[1];
+        const distance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
+        );
+        touchStartDistance.current = distance;
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        const touch1 = e.touches[0];
+        const touch2 = e.touches[1];
+        const distance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
+        );
+        const scale = distance / touchStartDistance.current;
+        setZoom((prev) => Math.min(Math.max(prev * scale, 1), 5));
+        touchStartDistance.current = distance;
+      }
+    };
+
+    const img = imgRef.current;
+    img.addEventListener("touchstart", handleTouchStart);
+    img.addEventListener("touchmove", handleTouchMove);
+
+    return () => {
+      img.removeEventListener("touchstart", handleTouchStart);
+      img.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [selectedPhoto]);
+
+  // Close lightbox on Escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setSelectedPhoto(null);
+        setZoom(1);
+      }
+    };
+
+    if (selectedPhoto) {
+      window.addEventListener("keydown", handleEscape);
+      return () => window.removeEventListener("keydown", handleEscape);
+    }
+  }, [selectedPhoto]);
 
   const loadPhotos = async () => {
     try {
@@ -115,6 +175,11 @@ export default function Gallery() {
     }
   };
 
+  const closeLightbox = () => {
+    setSelectedPhoto(null);
+    setZoom(1);
+  };
+
   return (
     <div className="min-h-screen bg-black text-white p-4">
       <div className="max-w-6xl mx-auto">
@@ -133,11 +198,19 @@ export default function Gallery() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
             {photos.map((photo) => (
               <div key={photo.id} className="bg-gray-900 rounded overflow-hidden">
-                <img
-                  src={photo.url}
-                  alt={photo.title}
-                  className="w-full h-64 object-cover"
-                />
+                <button
+                  onClick={() => {
+                    setSelectedPhoto(photo);
+                    setZoom(1);
+                  }}
+                  className="w-full h-64 overflow-hidden hover:opacity-80 transition-opacity cursor-pointer"
+                >
+                  <img
+                    src={photo.url}
+                    alt={photo.title}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
                 <div className="p-4">
                   <h3 className="font-bold">{photo.title}</h3>
                   {isAuth && (
@@ -151,6 +224,55 @@ export default function Gallery() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Lightbox Modal */}
+        {selectedPhoto && (
+          <div 
+            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+            onClick={closeLightbox}
+          >
+            {/* Close Button */}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 text-white hover:text-gray-300 z-60"
+              aria-label="Close"
+            >
+              <X size={32} />
+            </button>
+
+            {/* Image Container */}
+            <div 
+              className="w-full h-full flex items-center justify-center overflow-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                ref={imgRef}
+                src={selectedPhoto.url}
+                alt={selectedPhoto.title}
+                className="max-w-full max-h-full object-contain transition-transform duration-200"
+                style={{
+                  transform: `scale(${zoom})`,
+                  touchAction: "none",
+                }}
+              />
+            </div>
+
+            {/* Back Button at Bottom */}
+            <button
+              onClick={closeLightbox}
+              className="absolute bottom-4 left-4 text-cyan-400 hover:text-cyan-300 text-sm font-bold"
+            >
+              ← Back to Gallery
+            </button>
+
+            {/* Zoom Info */}
+            {zoom > 1 && (
+              <div className="absolute bottom-4 right-4 text-gray-400 text-sm">
+                Zoom: {(zoom * 100).toFixed(0)}%
+              </div>
+            )}
           </div>
         )}
 

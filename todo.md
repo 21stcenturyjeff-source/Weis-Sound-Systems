@@ -109,3 +109,9 @@
 ## Equipment Cards and Curtain Timing
 - [x] Prevent equipment card titles from wrapping (add whitespace-nowrap)
 - [x] Reduce curtain pause from 3 seconds to 2 seconds before /home redirect
+
+## Gallery Lightbox Feature
+- [x] Add full-screen lightbox modal for gallery photos
+- [x] Implement pinch-to-zoom functionality
+- [x] Add close button (X) and back button navigation
+- [x] Test on mobile and desktop
