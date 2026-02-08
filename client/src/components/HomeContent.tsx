@@ -225,7 +225,7 @@ export default function HomeContent() {
 
       {/* Contact Section - Diagonal Cut */}
       <section 
-        className="relative py-32 overflow-hidden pb-0"
+        className="relative py-32 overflow-hidden pb-0 md:pb-12"
         style={{
           clipPath: "polygon(0 8%, 100% 0, 100% 100%, 0 100%)",
           marginTop: "-8vh",
