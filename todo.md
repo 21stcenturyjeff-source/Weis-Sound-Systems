@@ -57,4 +57,10 @@
 - [x] Remove unnecessary dialog components
 - [x] Simplify upload to basic form
 - [x] Test fast page load
-- [ ] Deploy simplified version
+- [x] Deploy simplified version (force pushed to GitHub)
+
+## Fix Upload JSON Error
+- [x] Check server logs for upload errors
+- [x] Fix upload endpoint JSON response (removed duplicate import)
+- [x] Test upload on dev server (works correctly)
+- [ ] Deploy fix to production
