@@ -80,7 +80,7 @@ export default async function handler(
       </div>
       <div class="field">
         <span class="label">Phone:</span>
-        <span class="value">${phone || "Not provided"}</span>
+        <span class="value">${phone ? `<a href="tel:${phone.replace(/\D/g, '')}">${phone}</a>` : "Not provided"}</span>
       </div>
       <div class="field">
         <span class="label">Subject:</span>

@@ -126,3 +126,7 @@
 - [x] Add favicon.ico, favicon.png, and apple-touch-icon.png
 - [x] Add favicon links to index.html
 - [x] Suppress tRPC auth errors in console (no tRPC server on Vercel)
+
+## Phone Number Formatting
+- [x] Auto-format phone input to (123) 456-7890 pattern
+- [x] Display formatted phone in email template with clickable tel: link
