@@ -1,23 +1,23 @@
 {
   "buildCommand": "pnpm run build",
-  "outputDirectory": "dist",
   "installCommand": "pnpm install",
+  "functions": {
+    "dist/index.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
   "rewrites": [
     {
-      "source": "/api/trpc/:path*",
-      "destination": "/index.js"
+      "source": "/api/:path*",
+      "destination": "/dist/index.js"
     },
     {
       "source": "/sitemap.xml",
-      "destination": "/index.js"
-    },
-    {
-      "source": "/api/oauth/:path*",
-      "destination": "/index.js"
+      "destination": "/dist/index.js"
     },
     {
       "source": "/(.*)",
-      "destination": "/public/index.html"
+      "destination": "/dist/public/index.html"
     }
   ]
 }
