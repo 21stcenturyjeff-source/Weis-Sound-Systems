@@ -121,3 +121,8 @@
 - [x] Set up email sending to Markweis@protonmail.com via Resend
 - [x] Update "CONTACT US NOW" button to link to contact page
 - [x] Add contact route to App.tsx
+
+## Favicon and Error Suppression
+- [x] Add favicon.ico, favicon.png, and apple-touch-icon.png
+- [x] Add favicon links to index.html
+- [x] Suppress tRPC auth errors in console (no tRPC server on Vercel)
