@@ -29,11 +29,59 @@ export default function Gallery() {
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartDistance = useRef(0);
   const panStart = useRef({ x: 0, y: 0 });
+  const isDragging = useRef(false);
 
   // Load photos on mount
   useEffect(() => {
     loadPhotos();
   }, []);
+
+  // Handle mouse wheel zoom and drag
+  useEffect(() => {
+    if (!selectedPhoto || !imgRef.current) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? 0.9 : 1.1;
+      setZoom((prev) => Math.min(Math.max(prev * delta, 1), 5));
+    };
+
+    const handleMouseDown = (e: MouseEvent) => {
+      if (zoom > 1) {
+        isDragging.current = true;
+        panStart.current = { x: e.clientX, y: e.clientY };
+      }
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isDragging.current && zoom > 1) {
+        const deltaX = e.clientX - panStart.current.x;
+        const deltaY = e.clientY - panStart.current.y;
+        setPan((prev) => ({
+          x: prev.x + deltaX,
+          y: prev.y + deltaY,
+        }));
+        panStart.current = { x: e.clientX, y: e.clientY };
+      }
+    };
+
+    const handleMouseUp = () => {
+      isDragging.current = false;
+    };
+
+    const img = imgRef.current;
+    img.addEventListener("wheel", handleWheel as EventListener, { passive: false });
+    img.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      img.removeEventListener("wheel", handleWheel as EventListener);
+      img.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [selectedPhoto, zoom]);
 
   // Handle pinch-to-zoom
   useEffect(() => {
