@@ -3,7 +3,6 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { trpc } from "@/lib/trpc";
 
 const CONTACT_EMAIL = "Markweis@protonmail.com";
 
@@ -14,8 +13,6 @@ export default function Contact() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
-
-  const sendEmailMutation = trpc.contact.sendEmail.useMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,13 +25,17 @@ export default function Contact() {
     setSending(true);
 
     try {
-      await sendEmailMutation.mutateAsync({
-        name,
-        email,
-        phone: phone || undefined,
-        subject,
-        message,
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phone: phone || undefined, subject, message }),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
 
       toast.success("Message sent successfully! We'll get back to you soon.");
       
