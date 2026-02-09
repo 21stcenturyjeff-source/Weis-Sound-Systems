@@ -154,7 +154,7 @@ export default function Contact() {
       </section>
 
       {/* Contact Form */}
-      <section className="relative py-32 overflow-hidden pb-40">
+      <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] via-[#0a0a0a] to-[#1a1a2e]" />
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ff00ff]/0 via-[#ff00ff] to-[#ff00ff]/0 shadow-[0_0_20px_#ff00ff] pointer-events-none" />
 
@@ -163,7 +163,7 @@ export default function Contact() {
             Send us a <span className="text-[#ff00ff]">Message</span>
           </h2>
 
-          <form onSubmit={handleSubmit} className="bg-gray-900 p-8 rounded border border-gray-800 mb-8">
+          <form onSubmit={handleSubmit} className="bg-gray-900 p-8 rounded border border-gray-800">
             {/* Subject */}
             <div className="mb-6">
               <label className="block text-sm font-bold mb-2">Subject *</label>
@@ -276,12 +276,11 @@ export default function Contact() {
               {sending ? "Sending..." : "Send Message"}
             </Button>
           </form>
-          <div className="h-12" />
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="relative py-16 border-t-2 border-border">
+      <footer className="relative py-12 border-t-2 border-border">
         <div className="container">
           <div className="flex flex-col md:flex-row justify-between items-start gap-8">
             <div>

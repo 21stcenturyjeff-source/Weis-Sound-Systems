@@ -232,12 +232,12 @@ export default function HomeContent() {
 
       {/* Contact Section - Diagonal Cut */}
       <section 
-        className="relative py-32 overflow-hidden pb-0"
+        className="relative py-32 overflow-hidden pb-16"
         style={{
           clipPath: "polygon(0 8%, 100% 0, 100% 100%, 0 100%)",
           marginTop: "-8vh",
           paddingTop: "12vh",
-          paddingBottom: "0"
+          paddingBottom: "4rem"
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] via-[#0a0a0a] to-[#1a1a2e]" />
