@@ -1,12 +1,23 @@
 {
   "buildCommand": "pnpm run build",
-  "outputDirectory": "dist/public",
-  "framework": "vite",
+  "outputDirectory": "dist",
   "installCommand": "pnpm install",
   "rewrites": [
     {
+      "source": "/api/trpc/:path*",
+      "destination": "/index.js"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/index.js"
+    },
+    {
+      "source": "/api/oauth/:path*",
+      "destination": "/index.js"
+    },
+    {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/public/index.html"
     }
   ]
 }
