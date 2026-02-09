@@ -3,7 +3,7 @@
   "installCommand": "pnpm install",
   "functions": {
     "dist/index.js": {
-      "runtime": "nodejs20.x"
+      "runtime": "nodejs20.x@20"
     }
   },
   "rewrites": [
@@ -14,10 +14,6 @@
     {
       "source": "/sitemap.xml",
       "destination": "/dist/index.js"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/dist/public/index.html"
     }
   ]
 }
