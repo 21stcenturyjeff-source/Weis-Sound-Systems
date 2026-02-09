@@ -43,7 +43,7 @@ export default async function handler(
     });
 
     await resend.emails.send({
-      from: "Weis Audio Systems <onboarding@resend.dev>",
+      from: "Weis Audio Systems <contact@weisaudio.systems>",
       to: "21stcentury.jeff@gmail.com",
       replyTo: email,
       subject: `Weis Audio Contact: ${subject}`,
