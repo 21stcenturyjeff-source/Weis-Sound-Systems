@@ -9,6 +9,14 @@ export default async function handler(
   req: VercelRequest,
   res: VercelResponse
 ) {
+  // Handle CORS preflight
+  if (req.method === "OPTIONS") {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    return res.status(200).end();
+  }
+
   // Only allow POST
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -20,9 +28,9 @@ export default async function handler(
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   try {
-    const { name, email, phone, subject, message } = req.body;
+    const { subject, name, email, phone, eventDate, venue, bandName, message } = req.body;
 
-    if (!name || !email || !subject || !message) {
+    if (!subject || !name || !email || !phone || !message) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -42,6 +50,16 @@ export default async function handler(
       timeZone: "America/New_York",
     });
 
+    // Format event date for display
+    const formattedEventDate = eventDate
+      ? new Date(eventDate + "T00:00:00").toLocaleDateString("en-US", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      : "Not provided";
+
     await resend.emails.send({
       from: "Weis Audio Systems <contact@weisaudio.systems>",
       to: "21stcentury.jeff@gmail.com",
@@ -56,10 +74,12 @@ export default async function handler(
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
     .header { background: #1a1a2e; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
     .header h1 { margin: 0; color: #00ffff; }
+    .header h2 { margin: 5px 0 0; color: #ff00ff; font-size: 16px; }
     .section { margin: 0; padding: 20px; background: #f3f4f6; }
     .field { margin: 10px 0; }
     .label { font-weight: bold; color: #555; }
     .value { color: #000; }
+    .event-details { margin: 15px 0; padding: 15px; background: white; border-left: 4px solid #00ffff; border-radius: 4px; }
     .message-box { margin: 20px 0; padding: 15px; background: white; border-left: 4px solid #ff00ff; border-radius: 4px; }
     .footer { text-align: center; padding: 15px; background: #1a1a2e; color: #999; font-size: 12px; border-radius: 0 0 8px 8px; }
   </style>
@@ -68,6 +88,7 @@ export default async function handler(
   <div class="container">
     <div class="header">
       <h1>New Contact Form Submission</h1>
+      <h2>${subject}</h2>
     </div>
     <div class="section">
       <div class="field">
@@ -80,12 +101,25 @@ export default async function handler(
       </div>
       <div class="field">
         <span class="label">Phone:</span>
-        <span class="value">${phone ? `<a href="tel:${phone.replace(/\D/g, '')}">${phone}</a>` : "Not provided"}</span>
+        <span class="value"><a href="tel:${phone.replace(/\D/g, '')}">${phone}</a></span>
       </div>
-      <div class="field">
-        <span class="label">Subject:</span>
-        <span class="value">${subject}</span>
+
+      <div class="event-details">
+        <strong>Event Details:</strong>
+        <div class="field">
+          <span class="label">Date of Event:</span>
+          <span class="value">${formattedEventDate}</span>
+        </div>
+        <div class="field">
+          <span class="label">Venue:</span>
+          <span class="value">${venue || "Not provided"}</span>
+        </div>
+        <div class="field">
+          <span class="label">Band / Artist:</span>
+          <span class="value">${bandName || "Not provided"}</span>
+        </div>
       </div>
+
       <div class="message-box">
         <strong>Message:</strong>
         <p style="white-space: pre-wrap;">${message}</p>

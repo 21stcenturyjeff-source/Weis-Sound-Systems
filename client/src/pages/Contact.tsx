@@ -16,10 +16,13 @@ function formatPhoneNumber(value: string): string {
 }
 
 export default function Contact() {
+  const [subject, setSubject] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [subject, setSubject] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  const [venue, setVenue] = useState("");
+  const [bandName, setBandName] = useState("");
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
 
@@ -30,7 +33,7 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!name || !email || !subject || !message) {
+    if (!subject || !name || !email || !phone || !message) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -41,7 +44,16 @@ export default function Contact() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone: phone || undefined, subject, message }),
+        body: JSON.stringify({
+          subject,
+          name,
+          email,
+          phone,
+          eventDate: eventDate || undefined,
+          venue: venue || undefined,
+          bandName: bandName || undefined,
+          message,
+        }),
       });
 
       const data = await response.json();
@@ -53,10 +65,13 @@ export default function Contact() {
       toast.success("Message sent successfully! We'll get back to you soon.");
       
       // Reset form
+      setSubject("");
       setName("");
       setEmail("");
       setPhone("");
-      setSubject("");
+      setEventDate("");
+      setVenue("");
+      setBandName("");
       setMessage("");
     } catch (err) {
       toast.error("Failed to send message. Please try again.");
@@ -149,6 +164,19 @@ export default function Contact() {
           </h2>
 
           <form onSubmit={handleSubmit} className="bg-gray-900 p-8 rounded border border-gray-800">
+            {/* Subject */}
+            <div className="mb-6">
+              <label className="block text-sm font-bold mb-2">Subject *</label>
+              <input
+                type="text"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                placeholder="Equipment rental inquiry, technical support, etc."
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-[#00ffff]"
+                required
+              />
+            </div>
+
             {/* Name */}
             <div className="mb-6">
               <label className="block text-sm font-bold mb-2">Name *</label>
@@ -177,26 +205,49 @@ export default function Contact() {
 
             {/* Phone */}
             <div className="mb-6">
-              <label className="block text-sm font-bold mb-2">Phone (Optional)</label>
+              <label className="block text-sm font-bold mb-2">Phone *</label>
               <input
                 type="tel"
                 value={phone}
                 onChange={handlePhoneChange}
                 placeholder="(123) 456-7890"
                 className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-[#00ffff]"
+                required
               />
             </div>
 
-            {/* Subject */}
+            {/* Date of Event */}
             <div className="mb-6">
-              <label className="block text-sm font-bold mb-2">Subject *</label>
+              <label className="block text-sm font-bold mb-2">Date of Event</label>
+              <input
+                type="date"
+                value={eventDate}
+                onChange={(e) => setEventDate(e.target.value)}
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-[#00ffff] [color-scheme:dark]"
+              />
+            </div>
+
+            {/* Venue For Event */}
+            <div className="mb-6">
+              <label className="block text-sm font-bold mb-2">Venue For Event</label>
               <input
                 type="text"
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-                placeholder="Equipment rental inquiry, technical support, etc."
+                value={venue}
+                onChange={(e) => setVenue(e.target.value)}
+                placeholder="Venue name and location"
                 className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-[#00ffff]"
-                required
+              />
+            </div>
+
+            {/* Name Of Band */}
+            <div className="mb-6">
+              <label className="block text-sm font-bold mb-2">Name Of Band (Optional)</label>
+              <input
+                type="text"
+                value={bandName}
+                onChange={(e) => setBandName(e.target.value)}
+                placeholder="Band or artist name"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-[#00ffff]"
               />
             </div>
 

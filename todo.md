@@ -130,3 +130,11 @@
 ## Phone Number Formatting
 - [x] Auto-format phone input to (123) 456-7890 pattern
 - [x] Display formatted phone in email template with clickable tel: link
+
+## Contact Form Field Updates
+- [x] Make Phone required
+- [x] Add Date of Event field
+- [x] Add Venue For Event field
+- [x] Add Name Of Band field (optional)
+- [x] Move Subject to top of form
+- [x] Update email template with new fields
