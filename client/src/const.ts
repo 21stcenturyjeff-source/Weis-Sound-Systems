@@ -5,9 +5,8 @@ export const getLoginUrl = () => {
   const oauthPortalUrl = import.meta.env.VITE_OAUTH_PORTAL_URL;
   const appId = import.meta.env.VITE_APP_ID;
   
-  // Safety check for missing environment variables
+  // OAuth not configured on Vercel - return silently
   if (!oauthPortalUrl || !appId) {
-    console.error('[Auth] Missing OAuth configuration');
     return '/';
   }
   
